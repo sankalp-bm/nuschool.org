@@ -40,13 +40,11 @@ An AI-powered learning platform for children aged 4-12 that focuses on skill-bas
 
 ## Project Structure
 
-```
 kidlearn-ai/
 ├── frontend/           # Frontend application
 ├── backend/           # Express.js server
 ├── mobile/           # Mobile app (React Native)
 └── docs/             # Documentation
-```
 
 ## Contributing
 
