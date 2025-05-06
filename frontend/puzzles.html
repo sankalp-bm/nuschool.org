@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzles - KidLearn AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #F0FFFF; font-family: 'Nunito', Arial, sans-serif; }
+        .header-footer-bg { background: #6fd0ff !important; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem; }
+        .section-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 2rem 1rem 1.5rem 1rem; margin-bottom: 2rem; }
+        .section-title { font-size: 1.5rem !important; font-weight: 800; display: flex; align-items: center; margin-bottom: 1.5rem; color: #ffa726; }
+        .section-title .section-icon { font-size: 2rem !important; margin-right: 0.75rem; }
+        .category-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+        .category-btn2 { min-width: 0; min-height: 80px; height: 80px; width: 100%; display: flex; align-items: center; justify-content: center; border-radius: 1.5rem; font-size: 1.15rem; font-weight: 700; color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 3px solid rgba(255,255,255,0.7); transition: transform 0.15s; }
+        .category-btn2 .cat-icon { font-size: 1.5rem; margin-right: 0.5rem; }
+        .category-btn2:hover { transform: scale(1.04); }
+        .cat-identify { background: linear-gradient(135deg, #39b6ff 80%, #3fa7d6 100%); }
+        .cat-fill { background: linear-gradient(135deg, #e91e63 80%, #d72660 100%); }
+        .cat-mapping { background: linear-gradient(135deg, #7c4dff 80%, #512da8 100%); }
+        .footer-fixed { background: #fff !important; border-top-left-radius: 2rem; border-top-right-radius: 2rem; box-shadow: 0 -2px 12px rgba(0,0,0,0.08); position: static !important; bottom: 0; left: 0; right: 0; }
+        .footer-btn { display: flex; flex-direction: column; align-items: center; color: #6fd0ff; font-weight: 700; }
+        .footer-btn.active { color: #003366; }
+        .footer-btn .material-icons { background: #6fd0ff; color: #fff; border-radius: 50%; padding: 0.5rem; font-size: 2rem; margin-bottom: 0.25rem; }
+        .footer-btn.active .material-icons { background: #003366; }
+        @media (max-width: 640px) { .category-grid { grid-template-columns: 1fr 1fr; } }
+        main { flex: 1 0 auto; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="header-footer-bg text-white p-4 flex items-center justify-center relative">
+        <a href="mat.html" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white"><span class="material-icons" style="font-size: 2rem;">arrow_back</span></a>
+        <h1 class="text-2xl font-bold flex-1 text-center">Puzzles</h1>
+    </header>
+    <main class="flex-1 overflow-y-auto p-2 md:p-6">
+        <section class="section-card">
+            <h2 class="section-title"><span class="section-icon material-icons">extension</span>Puzzles</h2>
+            <div class="category-grid">
+                <a href="#" class="category-btn2 cat-identify"><span class="cat-icon material-icons">search</span>Identify</a>
+                <a href="#" class="category-btn2 cat-fill"><span class="cat-icon material-icons">edit</span>Fill Blanks</a>
+                <a href="#" class="category-btn2 cat-mapping"><span class="cat-icon material-icons">compare_arrows</span>Mapping</a>
+            </div>
+        </section>
+    </main>
+    <footer class="footer-fixed shadow p-2 flex justify-around items-center">
+        <a href="home.html" class="footer-btn"><span class="material-icons">arrow_back</span>Back</a>
+        <a href="home.html" class="footer-btn active"><span class="material-icons">home</span>Home</a>
+        <button class="footer-btn"><span class="material-icons">photo_library</span>Gallery</button>
+    </footer>
+</body>
+</html> 

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - KidLearn AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #F0FFFF; font-family: 'Nunito', Arial, sans-serif; }
+        .header-footer-bg { background: #6fd0ff !important; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem; }
+        .section-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 2rem 1rem 1.5rem 1rem; margin: 2rem auto; max-width: 480px; }
+        .section-title { font-size: 1.5rem !important; font-weight: 800; display: flex; align-items: center; margin-bottom: 1.5rem; color: #39b6ff; }
+        .section-title .section-icon { font-size: 2rem !important; margin-right: 0.75rem; }
+        .contact-link { color: #39b6ff; font-weight: 700; text-decoration: underline; }
+        .footer-fixed { background: #fff !important; border-top-left-radius: 2rem; border-top-right-radius: 2rem; box-shadow: 0 -2px 12px rgba(0,0,0,0.08); position: static !important; bottom: 0; left: 0; right: 0; }
+        .footer-btn { display: flex; flex-direction: column; align-items: center; color: #6fd0ff; font-weight: 700; }
+        .footer-btn.active { color: #003366; }
+        .footer-btn .material-icons { background: #6fd0ff; color: #fff; border-radius: 50%; padding: 0.5rem; font-size: 2rem; margin-bottom: 0.25rem; }
+        .footer-btn.active .material-icons { background: #003366; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="header-footer-bg text-white p-4 flex items-center justify-center relative">
+        <a href="home.html" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white"><span class="material-icons" style="font-size: 2rem;">arrow_back</span></a>
+        <h1 class="text-2xl font-bold flex-1 text-center">Contact Us</h1>
+    </header>
+    <main class="flex-1 overflow-y-auto p-2 md:p-6">
+        <section class="section-card">
+            <h2 class="section-title"><span class="section-icon material-icons">contact_mail</span>Contact Us</h2>
+            <p class="mb-4">This app was thoughtfully designed and created by Sankalp G Sharma.</p>
+            <p class="mb-4">For any feedback, complaints, or suggestions, please feel free to reach out using the details below:</p>
+            <div class="mb-2">
+                <a href="tel:7676885989" class="contact-link block mb-2"><span class="material-icons align-middle mr-1">call</span>Phone: 7676885989</a>
+                <a href="mailto:sankalp.bm@gmail.com" class="contact-link block"><span class="material-icons align-middle mr-1">email</span>Email: sankalp.bm@gmail.com</a>
+            </div>
+        </section>
+    </main>
+    <footer class="footer-fixed shadow p-2 flex justify-around items-center">
+        <a href="home.html" class="footer-btn"><span class="material-icons">arrow_back</span>Back</a>
+        <a href="home.html" class="footer-btn active"><span class="material-icons">home</span>Home</a>
+        <button class="footer-btn"><span class="material-icons">photo_library</span>Gallery</button>
+    </footer>
+</body>
+</html> 

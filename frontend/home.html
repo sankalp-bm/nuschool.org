@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - KidLearn AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F0FFFF;
+            font-family: 'Nunito', Arial, sans-serif;
+        }
+        .header-footer-bg {
+            background: #6fd0ff !important;
+            border-bottom-left-radius: 2rem;
+            border-bottom-right-radius: 2rem;
+        }
+        .category-maths { background-color: #FFD6D6; }    /* light red */
+        .category-language { background-color: #D6FFD6; } /* light green */
+        .category-computer { background-color: #FFF5D6; } /* light cream */
+        .category-science { background-color: #FFE5B4; }  /* light peach */
+        .category-family { background-color: #FFD6E0; }   /* light pink */
+        .category-friends { background-color: #FFFACD; }  /* light yellow */
+        .category-school { background-color: #D6E0FF; }   /* light blue */
+        .category-puzzle { background-color: #E0FFFF; }   /* light cyan */
+        .category-exercise { background-color: #FFE4E1; } /* light rose */
+        .category-games { background-color: #E6E6FA; }    /* light purple */
+        .category-process { background-color: #FFF0E0; }  /* light orange/cream */
+        .category-btn {
+            color: #333;
+        }
+        .section-title {
+            font-size: 1.5rem !important;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .section-title .section-icon { font-size: 2rem !important; margin-right: 0.75rem; }
+        .section-title.scholar { color: #39b6ff; }
+        .section-title.social { color: #e91e63; }
+        .section-title.skilled { color: #8bc34a; }
+        .section-icon {
+            font-size: 1.25rem !important;
+        }
+        .section-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 2rem 1rem 1.5rem 1rem; margin-bottom: 2rem; }
+        .category-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+        .category-btn2 { min-width: 0; min-height: 80px; height: 80px; width: 100%; display: flex; align-items: center; justify-content: center; border-radius: 1.5rem; font-size: 1.15rem; font-weight: 700; color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 3px solid rgba(255,255,255,0.7); transition: transform 0.15s; }
+        .category-btn2 .cat-icon { font-size: 1.5rem; margin-right: 0.5rem; }
+        .category-btn2:hover { transform: scale(1.04); }
+        .cat-maths { background: linear-gradient(135deg, #39b6ff 80%, #3fa7d6 100%); }
+        .cat-language { background: linear-gradient(135deg, #e91e63 80%, #d72660 100%); }
+        .cat-computer { background: linear-gradient(135deg, #39b6ff 80%, #0093b8 100%); }
+        .cat-science { background: linear-gradient(135deg, #ffe066 80%, #ffd600 100%); color: #bfa600; }
+        .cat-family { background: linear-gradient(135deg, #f8bbd0 80%, #e57399 100%); color: #ad1457; }
+        .cat-friends { background: linear-gradient(135deg, #ffa726 80%, #ff9800 100%); color: #b26a00; }
+        .cat-school { background: linear-gradient(135deg, #009688 80%, #00796b 100%); }
+        .cat-puzzle { background: linear-gradient(135deg, #39b6ff 80%, #0093b8 100%); }
+        .cat-exercise { background: linear-gradient(135deg, #e91e63 80%, #d72660 100%); }
+        .cat-games { background: linear-gradient(135deg, #7c4dff 80%, #512da8 100%); }
+        .cat-process { background: linear-gradient(135deg, #3949ab 80%, #283593 100%); }
+        @media (max-width: 640px) {
+            .category-grid { grid-template-columns: 1fr 1fr; }
+        }
+        main { flex: 1 0 auto; }
+        .footer-fixed { position: static !important; bottom: 0; left: 0; right: 0; }
+        .footer-btn { display: flex; flex-direction: column; align-items: center; color: #6fd0ff; font-weight: 700; }
+        .footer-btn.active { color: #003366; }
+        .footer-btn .material-icons { background: #6fd0ff; color: #fff; border-radius: 50%; padding: 0.5rem; font-size: 2rem; margin-bottom: 0.25rem; }
+        .footer-btn.active .material-icons { background: #003366; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Top Bar -->
+    <header class="header-footer-bg text-white p-4 flex items-center justify-center relative">
+        <button id="menuBtn" class="absolute left-4 top-1/2 transform -translate-y-1/2 z-20" aria-label="Menu" onclick="document.getElementById('menuDropdown').classList.toggle('hidden')">
+            <span class="material-icons" style="font-size: 2rem;">menu</span>
+        </button>
+        <div id="menuDropdown" class="hidden absolute left-4 top-16 bg-white rounded-xl shadow-lg py-2 w-40 z-30">
+            <a href="contact.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Contact Us</a>
+            <a href="login.html" class="block px-4 py-2 text-gray-700 hover:bg-blue-50">Logout</a>
+        </div>
+        <h1 class="text-2xl font-bold flex-1 text-center">Welcome to "nu School"</h1>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto p-2 md:p-6">
+        <!-- Be Scholar Section -->
+        <section class="section-card">
+            <h2 class="section-title scholar"><span class="section-icon">📖</span>Be Scholar</h2>
+            <div class="category-grid">
+                <a href="mat.html" class="category-btn2 cat-maths"><span class="cat-icon material-icons">calculate</span>Maths</a>
+                <button class="category-btn2 cat-language"><span class="cat-icon material-icons">translate</span>Language</button>
+                <button class="category-btn2 cat-computer"><span class="cat-icon material-icons">home</span>Computer</button>
+                <button class="category-btn2 cat-science"><span class="cat-icon material-icons">science</span>Science</button>
+            </div>
+        </section>
+        <!-- Be Social Section -->
+        <section class="section-card">
+            <h2 class="section-title social"><span class="section-icon">👥</span>Be Social</h2>
+            <div class="category-grid">
+                <button class="category-btn2 cat-family"><span class="cat-icon material-icons">groups</span>Family</button>
+                <button class="category-btn2 cat-friends"><span class="cat-icon material-icons">diversity_3</span>Friends</button>
+                <button class="category-btn2 cat-school"><span class="cat-icon material-icons">home</span>School</button>
+            </div>
+        </section>
+        <!-- Be Skilled Section -->
+        <section class="section-card">
+            <h2 class="section-title skilled"><span class="section-icon">📖</span>Be Skilled</h2>
+            <div class="category-grid">
+                <button class="category-btn2 cat-puzzle"><span class="cat-icon material-icons">extension</span>Puzzle</button>
+                <button class="category-btn2 cat-exercise"><span class="cat-icon material-icons">monitor_heart</span>Exercise</button>
+                <button class="category-btn2 cat-games"><span class="cat-icon material-icons">sports_esports</span>Games</button>
+                <button class="category-btn2 cat-process"><span class="cat-icon material-icons">checklist</span>Process</button>
+            </div>
+        </section>
+        <!-- Be Creative Section -->
+        <section class="section-card">
+            <h2 class="section-title scholar"><span class="section-icon material-icons">brush</span>Be Creative</h2>
+            <div class="category-grid">
+                <button class="category-btn2 cat-maths"><span class="cat-icon material-icons">menu_book</span>Create Story</button>
+                <button class="category-btn2 cat-language"><span class="cat-icon material-icons">music_note</span>Create Song</button>
+                <a href="create-drawing.html" class="category-btn2 cat-computer"><span class="cat-icon material-icons">draw</span>Create Drawing</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <footer class="footer-fixed shadow p-2 flex justify-around items-center">
+        <button class="footer-btn" disabled><span class="material-icons">arrow_back</span>Back</button>
+        <button class="footer-btn active" onclick="if(window.location.pathname.endsWith('home.html')) window.location.reload(); else window.location.href='home.html';"><span class="material-icons">home</span>Home</button>
+        <button class="footer-btn"><span class="material-icons">photo_library</span>Gallery</button>
+    </footer>
+</body>
+</html> 
