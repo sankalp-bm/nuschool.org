@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addition - KidLearn AI</title>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #F0FFFF 60%, #B6E2FF 100%);
+            font-family: 'Nunito', Arial, sans-serif;
+        }
+        .active-cell {
+            border: 2.5px solid #2196f3 !important;
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { border-color: #F0FFFF; }
+        }
+        .header-footer-bg { background: #6fd0ff !important; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem; }
+        .footer-fixed { background: #fff !important; border-top-left-radius: 2rem; border-top-right-radius: 2rem; box-shadow: 0 -2px 12px rgba(0,0,0,0.08); position: static !important; bottom: 0; left: 0; right: 0; }
+        .footer-btn { display: flex; flex-direction: column; align-items: center; color: #6fd0ff; font-weight: 700; }
+        .footer-btn.active { color: #003366; }
+        .footer-btn .material-icons { background: #6fd0ff; color: #fff; border-radius: 50%; padding: 0.5rem; font-size: 2rem; margin-bottom: 0.25rem; }
+        .footer-btn.active .material-icons { background: #003366; }
+        main { flex: 1 0 auto; padding-bottom: 140px; }
+        .keypad-btn {
+            width: 108px; /* 1.8x of 60px */
+            height: 60px;
+            font-size: 2rem;
+            margin: 0.25rem;
+            border-radius: 1.5rem;
+            background: #2196f3;
+            color: #fff;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.10);
+            border: 2px solid #fff;
+            transition: background 0.2s, color 0.2s;
+        }
+        .keypad-btn:active {
+            background: #1976d2;
+            color: #fff;
+        }
+        .cheerful-btn {
+            width: 108px; /* 1.8x of 60px */
+            border: 2px solid #fff;
+            border-radius: 1rem;
+            font-weight: bold;
+            padding: 0.5rem 1.5rem;
+            margin: 0.25rem;
+            font-size: 1rem;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.10);
+            background: #2196f3;
+            color: #fff;
+        }
+        .cheerful-btn.bg-green-500 {
+            background: #22c55e !important;
+            color: #fff !important;
+        }
+        .cheerful-btn:active {
+            background: #1976d2;
+        }
+        .cheerful-btn.minus {
+            background: #ffb3b3;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+        .cheerful-btn.plus {
+            background: #b3ffb3;
+            color: #fff;
+            border: 2px solid #fff;
+        }
+        .level-selector-btn {
+            background: #2196f3;
+            color: #fff;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0.5rem;
+            border: 2px solid #fff;
+        }
+        .level-indicator {
+            background: #2196f3;
+            color: #fff;
+            border-radius: 1rem;
+            padding: 0.25rem 1.5rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 8px rgba(33,150,243,0.10);
+            border: 2px solid #fff;
+        }
+        .cheerful-mascot {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            animation: bounce 1.5s infinite alternate;
+        }
+        .cheerful-mascot span {
+            display: inline-block;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f984.svg') no-repeat center/contain;
+            filter: hue-rotate(200deg) saturate(1.5);
+        }
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+        .cheerful-title {
+            color: #2196f3;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        .cheerful-box {
+            background: #fffbe7;
+            border-radius: 1.5rem;
+            box-shadow: 0 2px 12px rgba(33,150,243,0.10);
+        }
+        .blue-line {
+            border-top: 2px solid #2196f3;
+            width: 432px; /* 4 keypad buttons * 108px */
+            margin: 0 auto 1rem auto;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Standard Header (not fixed) -->
+    <header class="header-footer-bg text-white p-4 flex items-center justify-center relative">
+        <button class="absolute left-4 top-1/2 transform -translate-y-1/2" aria-label="Menu">
+            <span class="material-icons" style="font-size: 2rem;">menu</span>
+        </button>
+        <h1 class="text-xl font-bold flex-1 text-center">[Addition]</h1>
+    </header>
+    <main class="flex-1 flex flex-col items-center justify-center p-4" x-data="additionExercise()">
+        <!-- Mascot -->
+        <div class="cheerful-mascot text-center"><span></span></div>
+        <!-- Level Controls (moved here, replaces 'Solve the addition problem:') -->
+        <div class="w-full max-w-md mx-auto mb-2 flex items-center justify-center">
+            <button class="level-selector-btn cheerful-btn minus" @click="changeLevel(-1)">-</button>
+            <div class="level-indicator" x-text="'L' + level"></div>
+            <button class="level-selector-btn cheerful-btn plus" @click="changeLevel(1)">+</button>
+        </div>
+        <!-- Popups -->
+        <template x-if="showNextLevelPopup">
+            <div class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center">
+                    <div class="text-xl font-bold mb-4">Next level?</div>
+                    <div class="mb-4">You got 3 in a row correct! Ready for a challenge?</div>
+                    <div class="flex justify-center gap-4">
+                        <button @click="closePopup('stay')" class="cheerful-btn">No, Wait!</button>
+                        <button @click="closePopup('next')" class="cheerful-btn">Oh, Yes!</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template x-if="showMakeEasyPopup">
+            <div class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center">
+                    <div class="text-xl font-bold mb-4">Let's Make it Easy</div>
+                    <div class="mb-4">3 in a row incorrect. Want to try an easier level?</div>
+                    <div class="flex justify-center gap-4">
+                        <button @click="closePopup('stay')" class="cheerful-btn">No, I'll Try</button>
+                        <button @click="closePopup('easy')" class="cheerful-btn">Yes, Please</button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <!-- Problem Area (centered) -->
+        <div class="w-full py-6 flex flex-col items-center justify-center shadow-md" style="min-height: 220px; background: none;">
+            <div class="grid grid-cols-1 gap-1 w-full max-w-md mx-auto">
+                <!-- First number -->
+                <div class="flex justify-center">
+                    <template x-for="(digit, idx) in paddedFirst" :key="'first-' + idx">
+                        <div class="w-10 h-12 flex items-center justify-center bg-blue-100 text-2xl font-mono border border-blue-200 rounded-lg">
+                            <span x-text="digit !== ' ' ? digit : ''"></span>
+                        </div>
+                    </template>
+                </div>
+                <!-- Second number with operation -->
+                <div class="flex justify-center">
+                    <div class="w-10 h-12 flex items-center justify-center text-2xl font-bold text-blue-500">+</div>
+                    <template x-for="(digit, idx) in paddedSecond" :key="'second-' + idx">
+                        <div class="w-10 h-12 flex items-center justify-center bg-blue-100 text-2xl font-mono border border-blue-200 rounded-lg">
+                            <span x-text="digit !== ' ' ? digit : ''"></span>
+                        </div>
+                    </template>
+                </div>
+                <div class="blue-line"></div>
+                <!-- Answer row -->
+                <div class="flex justify-center">
+                    <template x-for="(cell, idx) in answerCells" :key="'answer-' + idx">
+                        <div
+                            class="w-10 h-12 flex items-center justify-center bg-yellow-200 text-2xl font-mono border border-yellow-300 text-center select-none rounded-lg"
+                            :class="activeCell === idx ? 'active-cell' : ''"
+                            @click="activeCell = idx"
+                        >
+                            <span x-text="answerCells[idx]"></span>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+        <!-- Keypad and Buttons -->
+        <div class="cheerful-box bg-white rounded-lg shadow-lg p-6 w-full max-w-md mt-2" style="background: none; box-shadow: none;">
+            <div class="mt-6 flex flex-col items-center">
+                <div class="grid grid-cols-4 gap-2 w-full max-w-xs">
+                    <button class="keypad-btn" @click="pressKey('7')">7</button>
+                    <button class="keypad-btn" @click="pressKey('8')">8</button>
+                    <button class="keypad-btn" @click="pressKey('9')">9</button>
+                    <button class="cheerful-btn" @click="generateProblem"><span class="material-icons align-middle">autorenew</span> New</button>
+                    <button class="keypad-btn" @click="pressKey('4')">4</button>
+                    <button class="keypad-btn" @click="pressKey('5')">5</button>
+                    <button class="keypad-btn" @click="pressKey('6')">6</button>
+                    <button class="cheerful-btn" @click="showHint"><span class="material-icons align-middle">lightbulb</span> Hint</button>
+                    <button class="keypad-btn" @click="pressKey('1')">1</button>
+                    <button class="keypad-btn" @click="pressKey('2')">2</button>
+                    <button class="keypad-btn" @click="pressKey('3')">3</button>
+                    <button class="cheerful-btn" @click="showRules"><span class="material-icons align-middle">menu_book</span> Rules</button>
+                    <button class="keypad-btn" @click="pressKey('0')">0</button>
+                    <button class="keypad-btn" @click="pressKey('.')">.</button>
+                    <button class="keypad-btn" @click="undoInput()"><span class="material-icons">undo</span></button>
+                    <button class="cheerful-btn bg-green-500 hover:bg-green-600 border-none" style="color: #fff !important; background-color: #22c55e !important;" @click="checkAnswer"><span class="material-icons align-middle">check_circle</span> Submit</button>
+                </div>
+            </div>
+            <div class="mt-2 text-center font-semibold" x-text="feedback"></div>
+        </div>
+        <!-- Rules Popup -->
+        <template x-if="showRulesPopup">
+            <div class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center">
+                    <div class="text-xl font-bold mb-4">Rules of Addition</div>
+                    <div class="mb-4 text-left">
+                        <ul class="list-disc ml-6 text-sm text-gray-700">
+                            <li>Add numbers from right (ONES) to left (TENS, HUNDREDS, ...).</li>
+                            <li>If the sum is 10 or more, carry over to the next column.</li>
+                            <li>Line up the digits by place value.</li>
+                            <li>Check your answer before submitting!</li>
+                        </ul>
+                    </div>
+                    <button @click="showRulesPopup=false" class="cheerful-btn">Close</button>
+                </div>
+            </div>
+        </template>
+        <!-- Hint Popup -->
+        <template x-if="showHintPopup">
+            <div class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center">
+                    <div class="text-xl font-bold mb-4">Hint</div>
+                    <div class="mb-4 text-left text-sm text-gray-700">
+                        Try adding the rightmost digits first. If the sum is 10 or more, write the ONES digit and carry the TENS to the next column!
+                    </div>
+                    <button @click="showHintPopup=false" class="cheerful-btn">Close</button>
+                </div>
+            </div>
+        </template>
+    </main>
+    <!-- Standard Footer (fixed to bottom, always visible) -->
+    <footer class="footer-fixed shadow p-2 flex justify-around items-center">
+        <a href="/home.html" class="footer-btn"><span class="material-icons">arrow_back</span>Back</a>
+        <a href="/home.html" class="footer-btn active"><span class="material-icons">home</span>Home</a>
+        <button class="footer-btn"><span class="material-icons">photo_library</span>Gallery</button>
+    </footer>
+    <script>
+    function additionExercise() {
+        return {
+            firstNumber: 0,
+            secondNumber: 0,
+            answerCells: [],
+            paddedFirst: [],
+            paddedSecond: [],
+            activeCell: 0,
+            feedback: '',
+            level: 3,
+            showNextLevelPopup: false,
+            showMakeEasyPopup: false,
+            showRulesPopup: false,
+            showHintPopup: false,
+            changeLevel(delta) {
+                this.level = Math.max(1, this.level + delta);
+            },
+            generateProblem() {
+                // ... existing code ...
+            },
+            pressKey(key) {
+                // ... existing code ...
+            },
+            undoInput() {
+                // Remove the last non-empty input
+                for (let i = this.answerCells.length - 1; i >= 0; i--) {
+                    if (this.answerCells[i] !== '' && this.answerCells[i] !== undefined) {
+                        this.answerCells[i] = '';
+                        this.activeCell = i;
+                        break;
+                    }
+                }
+            },
+            checkAnswer() {
+                // ... existing code ...
+            },
+            showHint() {
+                this.showHintPopup = true;
+            },
+            showRules() {
+                this.showRulesPopup = true;
+            },
+            closePopup(type) {
+                // ... existing code ...
+            }
+        }
+    }
+    </script>
+</body>
+</html> 
