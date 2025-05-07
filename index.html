@@ -3,15 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KidLearn AI - Personalized Learning for Children</title>
+    <title>Go Buddy Go - Login</title>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <!-- Google Platform Library -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Facebook SDK -->
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap" rel="stylesheet">
     <style>
+        .indicator-rect {
+            width: 28px;
+            height: 12px;
+            border-radius: 8px 8px 16px 16px;
+            background: #1e3353;
+            margin: 0 4px;
+            display: inline-block;
+        }
         body { font-family: 'Nunito', Arial, sans-serif; }
         .header-footer-bg { background: #6fd0ff !important; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem; }
-        .section-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 2rem 1rem 1.5rem 1rem; margin-bottom: 2rem; }
         .footer-fixed { background: #fff !important; border-top-left-radius: 2rem; border-top-right-radius: 2rem; box-shadow: 0 -2px 12px rgba(0,0,0,0.08); position: static !important; bottom: 0; left: 0; right: 0; }
         .footer-btn { display: flex; flex-direction: column; align-items: center; color: #6fd0ff; font-weight: 700; }
         .footer-btn.active { color: #003366; }
@@ -19,133 +30,105 @@
         .footer-btn.active .material-icons { background: #003366; }
     </style>
 </head>
-<body class="bg-gray-100 flex flex-col min-h-screen">
-    <div x-data="app()" class="min-h-screen">
-        <!-- Navigation -->
-        <header class="header-footer-bg text-white p-4 flex items-center justify-center relative">
-            <h1 class="text-2xl font-bold flex-1 text-center">KidLearn AI</h1>
-        </header>
-
-        <!-- Main Content -->
-        <main class="container mx-auto p-4">
-            <!-- Welcome Section -->
-            <div x-show="!isLoggedIn" class="text-center py-12">
-                <h2 class="text-4xl font-bold mb-4">Welcome to KidLearn AI</h2>
-                <p class="text-xl mb-8">Personalized learning for your child's unique abilities</p>
-                <button @click="showRegisterModal = true" class="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg">
-                    Get Started
-                </button>
-            </div>
-
-            <!-- Dashboard -->
-            <div x-show="isLoggedIn" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Math Section -->
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-xl font-bold mb-4">Mathematics</h3>
-                    <div class="space-y-4">
-                        <template x-for="exercise in recommendations.math.exercises" :key="exercise.type">
-                            <div class="border rounded p-4">
-                                <h4 x-text="exercise.content" class="font-semibold"></h4>
-                                <p class="text-sm text-gray-600" x-text="'Difficulty: ' + exercise.difficulty"></p>
-                                <button @click="startExercise(exercise)" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded">
-                                    Start
-                                </button>
-                            </div>
-                        </template>
-                    </div>
-                </div>
-
-                <!-- Language Section -->
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-xl font-bold mb-4">Language</h3>
-                    <div class="space-y-4">
-                        <template x-for="exercise in recommendations.language.exercises" :key="exercise.type">
-                            <div class="border rounded p-4">
-                                <h4 x-text="exercise.content" class="font-semibold"></h4>
-                                <p class="text-sm text-gray-600" x-text="'Difficulty: ' + exercise.difficulty"></p>
-                                <button @click="startExercise(exercise)" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded">
-                                    Start
-                                </button>
-                            </div>
-                        </template>
-                    </div>
-                </div>
-
-                <!-- Creative Skills Section -->
-                <div class="bg-white rounded-lg shadow-lg p-6">
-                    <h3 class="text-xl font-bold mb-4">Creative Skills</h3>
-                    <div class="space-y-4">
-                        <template x-for="exercise in recommendations.creative.exercises" :key="exercise.type">
-                            <div class="border rounded p-4">
-                                <h4 x-text="exercise.content" class="font-semibold"></h4>
-                                <p class="text-sm text-gray-600" x-text="'Difficulty: ' + exercise.difficulty"></p>
-                                <button @click="startExercise(exercise)" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded">
-                                    Start
-                                </button>
-                            </div>
-                        </template>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Login Modal -->
-        <div x-show="showLoginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div class="bg-white p-8 rounded-lg w-96">
-                <h2 class="text-2xl font-bold mb-4">Login</h2>
-                <div x-show="errorMessage" class="mb-4 p-3 bg-red-100 text-red-700 rounded">
-                    <span x-text="errorMessage"></span>
-                </div>
-                <form @submit.prevent="login">
-                    <div class="mb-4">
-                        <label class="block text-gray-700 mb-2">Email</label>
-                        <input type="text" x-model="loginForm.email" class="w-full border rounded p-2" required>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 mb-2">Password</label>
-                        <input type="password" x-model="loginForm.password" class="w-full border rounded p-2" required>
-                    </div>
-                    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded">Login</button>
-                </form>
-                <button @click="showLoginModal = false; errorMessage = ''" class="mt-4 text-gray-600">Cancel</button>
-            </div>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+    <div x-data="buddyLogin()" class="w-full max-w-xs p-8 bg-white rounded-lg shadow-lg flex flex-col items-center">
+        <!-- Title -->
+        <h2 class="text-2xl font-bold text-blue-900 mb-6 text-center tracking-wide">GO BUDDY GO</h2>
+        <!-- Indicators -->
+        <div class="flex justify-center mb-10 w-full">
+            <template x-for="i in 5" :key="i">
+                <span class="indicator-rect"></span>
+            </template>
         </div>
-
-        <!-- Register Modal -->
-        <div x-show="showRegisterModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div class="bg-white p-8 rounded-lg w-96">
-                <h2 class="text-2xl font-bold mb-4">Register</h2>
-                <div x-show="errorMessage" class="mb-4 p-3 bg-red-100 text-red-700 rounded">
-                    <span x-text="errorMessage"></span>
-                </div>
-                <form @submit.prevent="register">
-                    <div class="mb-4">
-                        <label class="block text-gray-700 mb-2">Email</label>
-                        <input type="text" x-model="registerForm.email" class="w-full border rounded p-2" required>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 mb-2">Password</label>
-                        <input type="password" x-model="registerForm.password" class="w-full border rounded p-2" required>
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 mb-2">User Type</label>
-                        <select x-model="registerForm.userType" class="w-full border rounded p-2" required>
-                            <option value="child">Child</option>
-                            <option value="parent">Parent</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded">Register</button>
-                </form>
-                <button @click="showRegisterModal = false; errorMessage = ''" class="mt-4 text-gray-600">Cancel</button>
-            </div>
-        </div>
+        <!-- Subtitle -->
+        <div class="text-center text-black mb-8">Sign in Or Sign up</div>
+        <!-- Error Message -->
+        <template x-if="errorMessage">
+            <div class="mb-4 p-2 bg-red-100 text-red-700 rounded w-full text-center text-sm" x-text="errorMessage"></div>
+        </template>
+        <!-- Facebook Button -->
+        <button @click="loginFacebook" class="w-full mb-3 py-3 rounded bg-blue-400 text-white font-bold text-lg shadow flex items-center justify-center">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook" class="w-6 h-6 mr-2"> Facebook
+        </button>
+        <!-- Gmail Button -->
+        <button id="googleSignInBtn" @click="loginGmail" class="w-full mb-3 py-3 rounded bg-red-200 text-white font-bold text-lg shadow flex items-center justify-center">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Google_icon_%282013-2015%29.png" alt="Google" class="w-6 h-6 mr-2"> Gmail
+        </button>
+        <!-- PIN Button or Input -->
+        <template x-if="!showPinInput">
+            <button @click="showPinInput = true" class="w-full mb-3 py-3 rounded bg-purple-300 text-white font-bold text-lg shadow">PIN</button>
+        </template>
+        <template x-if="showPinInput">
+            <input type="text" x-model="pin" maxlength="8" class="w-full mb-3 py-3 rounded bg-purple-100 text-purple-900 font-bold text-lg shadow text-center tracking-widest outline-none border-2 border-purple-300" placeholder="Enter PIN" @input="checkPin">
+        </template>
     </div>
-
-    <footer class="footer-fixed shadow p-2 flex justify-around items-center">
-        <button class="footer-btn"><span class="material-icons">arrow_back</span>Back</button>
-        <button class="footer-btn active"><span class="material-icons">home</span>Home</button>
-        <button class="footer-btn"><span class="material-icons">photo_library</span>Gallery</button>
-    </footer>
-    <script src="js/app.js"></script>
+    <script>
+    function buddyLogin() {
+        return {
+            showPinInput: false,
+            pin: '',
+            errorMessage: '',
+            // Facebook login
+            loginFacebook() {
+                // Initialize Facebook SDK if not already done
+                if (!window.FB) {
+                    this.errorMessage = 'Facebook SDK not loaded.';
+                    return;
+                }
+                FB.login((response) => {
+                    if (response.authResponse) {
+                        // You can get user info here if needed
+                        // FB.api('/me', function(response) { ... });
+                        // Simulate login: check if new user, etc.
+                        window.location.href = 'home.html';
+                    } else {
+                        this.errorMessage = 'Facebook login cancelled or failed.';
+                    }
+                }, {scope: 'public_profile,email'});
+            },
+            // Google login
+            loginGmail() {
+                // Google One Tap or button
+                // You must set up your Google Client ID and configure OAuth consent screen
+                // See: https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid
+                const client = google.accounts.oauth2.initTokenClient({
+                    client_id: 'YOUR_GOOGLE_CLIENT_ID', // <-- Replace with your Google Client ID
+                    scope: 'profile email',
+                    callback: (tokenResponse) => {
+                        if (tokenResponse && tokenResponse.access_token) {
+                            // Simulate login: check if new user, etc.
+                            window.location.href = 'home.html';
+                        } else {
+                            this.errorMessage = 'Google login failed.';
+                        }
+                    },
+                });
+                client.requestAccessToken();
+            },
+            // PIN login logic
+            checkPin() {
+                this.errorMessage = '';
+                if (this.pin.length === 8) {
+                    if (this.pin === '02012019') {
+                        // Simulate login and redirect
+                        window.location.href = 'home.html?demo=1';
+                    } else {
+                        this.errorMessage = 'Incorrect PIN. Please try again.';
+                        this.pin = '';
+                    }
+                }
+            }
+        }
+    }
+    // Facebook SDK init
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : 'YOUR_FACEBOOK_APP_ID', // <-- Replace with your Facebook App ID
+            cookie     : true,
+            xfbml      : true,
+            version    : 'v19.0'
+        });
+    };
+    </script>
 </body>
 </html> 
