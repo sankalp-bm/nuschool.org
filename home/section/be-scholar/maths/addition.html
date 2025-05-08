@@ -29,10 +29,10 @@
         .footer-btn.active .material-icons { background: #003366; }
         main { flex: 1 0 auto; padding-bottom: 140px; }
         .keypad-btn {
-            width: 108px; /* 1.8x of 60px */
+            width: 100%;
             height: 60px;
             font-size: 2rem;
-            margin: 0.25rem;
+            margin: 0.25rem 0;
             border-radius: 1.5rem;
             background: #2196f3;
             color: #fff;
@@ -46,12 +46,12 @@
             color: #fff;
         }
         .cheerful-btn {
-            width: 108px; /* 1.8x of 60px */
+            width: 100%;
             border: 2px solid #fff;
             border-radius: 1rem;
             font-weight: bold;
             padding: 0.5rem 1.5rem;
-            margin: 0.25rem;
+            margin: 0.25rem 0;
             font-size: 1rem;
             box-shadow: 0 2px 8px rgba(33,150,243,0.10);
             background: #2196f3;
@@ -126,8 +126,21 @@
         }
         .blue-line {
             border-top: 2px solid #2196f3;
-            width: 432px; /* 4 keypad buttons * 108px */
+            width: 100%;
             margin: 0 auto 1rem auto;
+        }
+        .keypad-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 420px;
+        }
+        @media (max-width: 600px) {
+            .keypad-grid {
+                max-width: 100%;
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
     </style>
 </head>
@@ -139,7 +152,7 @@
         </button>
         <h1 class="text-xl font-bold flex-1 text-center">[Addition]</h1>
     </header>
-    <main class="flex-1 flex flex-col items-center justify-center p-4" x-data="additionExercise()">
+    <main class="flex-1 flex flex-col items-center justify-center p-4" x-data="additionExercise()" x-init="generateProblem()">
         <!-- Mascot -->
         <div class="cheerful-mascot text-center"><span></span></div>
         <!-- Level Controls (moved here, replaces 'Solve the addition problem:') -->
@@ -174,24 +187,14 @@
             </div>
         </template>
         <!-- Problem Area (centered) -->
-        <div class="w-full py-6 flex flex-col items-center justify-center shadow-md" style="min-height: 220px; background: none;">
+        <div class="w-full py-6 flex flex-col items-center justify-center shadow-md" style="min-height: 120px; background: none;">
             <div class="grid grid-cols-1 gap-1 w-full max-w-md mx-auto">
                 <!-- First number -->
-                <div class="flex justify-center">
-                    <template x-for="(digit, idx) in paddedFirst" :key="'first-' + idx">
-                        <div class="w-10 h-12 flex items-center justify-center bg-blue-100 text-2xl font-mono border border-blue-200 rounded-lg">
-                            <span x-text="digit !== ' ' ? digit : ''"></span>
-                        </div>
-                    </template>
-                </div>
+                <div class="flex justify-center text-3xl font-mono font-bold text-blue-900" x-text="firstNumber"></div>
                 <!-- Second number with operation -->
-                <div class="flex justify-center">
-                    <div class="w-10 h-12 flex items-center justify-center text-2xl font-bold text-blue-500">+</div>
-                    <template x-for="(digit, idx) in paddedSecond" :key="'second-' + idx">
-                        <div class="w-10 h-12 flex items-center justify-center bg-blue-100 text-2xl font-mono border border-blue-200 rounded-lg">
-                            <span x-text="digit !== ' ' ? digit : ''"></span>
-                        </div>
-                    </template>
+                <div class="flex justify-center text-3xl font-mono font-bold text-blue-900">
+                    <span class="mr-2">+</span>
+                    <span x-text="secondNumber"></span>
                 </div>
                 <div class="blue-line"></div>
                 <!-- Answer row -->
@@ -211,7 +214,7 @@
         <!-- Keypad and Buttons -->
         <div class="cheerful-box bg-white rounded-lg shadow-lg p-6 w-full max-w-md mt-2" style="background: none; box-shadow: none;">
             <div class="mt-6 flex flex-col items-center">
-                <div class="grid grid-cols-4 gap-2 w-full max-w-xs">
+                <div class="keypad-grid">
                     <button class="keypad-btn" @click="pressKey('7')">7</button>
                     <button class="keypad-btn" @click="pressKey('8')">8</button>
                     <button class="keypad-btn" @click="pressKey('9')">9</button>
@@ -274,8 +277,6 @@
             firstNumber: 0,
             secondNumber: 0,
             answerCells: [],
-            paddedFirst: [],
-            paddedSecond: [],
             activeCell: 0,
             feedback: '',
             level: 3,
@@ -285,15 +286,26 @@
             showHintPopup: false,
             changeLevel(delta) {
                 this.level = Math.max(1, this.level + delta);
+                this.generateProblem();
             },
             generateProblem() {
-                // ... existing code ...
+                // Simple random numbers for demo
+                this.firstNumber = Math.floor(Math.random() * 90 + 10);
+                this.secondNumber = Math.floor(Math.random() * 90 + 10);
+                const maxLength = Math.max(this.firstNumber.toString().length, this.secondNumber.toString().length) + 1;
+                this.answerCells = Array(maxLength).fill('');
+                this.activeCell = maxLength - 1;
+                this.feedback = '';
             },
             pressKey(key) {
-                // ... existing code ...
+                if (this.activeCell === null) return;
+                if (key === '.' && this.answerCells.includes('.')) return;
+                this.answerCells[this.activeCell] = key;
+                if (this.activeCell > 0) {
+                    this.activeCell--;
+                }
             },
             undoInput() {
-                // Remove the last non-empty input
                 for (let i = this.answerCells.length - 1; i >= 0; i--) {
                     if (this.answerCells[i] !== '' && this.answerCells[i] !== undefined) {
                         this.answerCells[i] = '';
@@ -303,7 +315,13 @@
                 }
             },
             checkAnswer() {
-                // ... existing code ...
+                const userAnswer = this.answerCells.join('').replace(/\s/g, '');
+                const correct = (parseInt(this.firstNumber) + parseInt(this.secondNumber)).toString().padStart(this.answerCells.length, ' ');
+                if (userAnswer === correct.replace(/\s/g, '')) {
+                    this.feedback = '✅ Correct!';
+                } else {
+                    this.feedback = '❌ Try again!';
+                }
             },
             showHint() {
                 this.showHintPopup = true;
@@ -312,7 +330,8 @@
                 this.showRulesPopup = true;
             },
             closePopup(type) {
-                // ... existing code ...
+                this.showNextLevelPopup = false;
+                this.showMakeEasyPopup = false;
             }
         }
     }

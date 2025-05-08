@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Drawing - KidLearn AI</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #F0FFFF; font-family: 'Nunito', Arial, sans-serif; }
+        .header-footer-bg { background: #6fd0ff !important; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem; }
+        .section-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 2rem 1rem 1.5rem 1rem; margin: 2rem auto; max-width: 700px; }
+        .section-title { font-size: 1.5rem !important; font-weight: 800; display: flex; align-items: center; margin-bottom: 1.5rem; color: #39b6ff; }
+        .section-title .section-icon { font-size: 2rem !important; margin-right: 0.75rem; }
+        .toolbar { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
+        .toolbar label { font-weight: 600; margin-right: 0.5rem; }
+        .toolbar input[type='color'] { border: none; width: 2rem; height: 2rem; border-radius: 50%; }
+        .toolbar select, .toolbar input[type='range'] { border-radius: 0.5rem; padding: 0.25rem 0.5rem; }
+        .toolbar button { background: #6fd0ff; color: #fff; border: none; border-radius: 0.75rem; padding: 0.5rem 1rem; font-weight: 700; margin-right: 0.5rem; transition: background 0.2s; }
+        .toolbar button.active, .toolbar button:hover { background: #39b6ff; }
+        .drawing-board { background: #fff; border-radius: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,0.10); display: flex; justify-content: center; align-items: center; margin-bottom: 1rem; }
+        canvas { border-radius: 1rem; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .footer-fixed { background: #fff !important; border-top-left-radius: 2rem; border-top-right-radius: 2rem; box-shadow: 0 -2px 12px rgba(0,0,0,0.08); position: static !important; bottom: 0; left: 0; right: 0; }
+        .footer-btn { display: flex; flex-direction: column; align-items: center; color: #6fd0ff; font-weight: 700; }
+        .footer-btn.active { color: #003366; }
+        .footer-btn .material-icons { background: #6fd0ff; color: #fff; border-radius: 50%; padding: 0.5rem; font-size: 2rem; margin-bottom: 0.25rem; }
+        .footer-btn.active .material-icons { background: #003366; }
+        .tool-btn span.material-icons { transition: color 0.1s; }
+        .tool-btn.active span.material-icons { color: #003366 !important; }
+        .tool-btn[title]:hover:after, .tool-btn[title]:focus:after {
+            content: attr(title);
+            position: absolute;
+            background: #003366;
+            color: #fff;
+            font-size: 0.85rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.5rem;
+            left: 50%;
+            top: -2.2rem;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            z-index: 10;
+            opacity: 1;
+            pointer-events: none;
+            transition: none;
+        }
+        .tool-btn[title] { position: relative; }
+        .toolbar { overflow-y: hidden !important; }
+        .toolbar-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+        .toolbar-scroll::-webkit-scrollbar-thumb {
+            background: #b3e0ff;
+            border-radius: 2px;
+        }
+        .toolbar-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="header-footer-bg text-white p-4 flex items-center justify-center relative">
+        <a href="home.html" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white"><span class="material-icons" style="font-size: 2rem;">arrow_back</span></a>
+        <h1 class="text-2xl font-bold flex-1 text-center">Create Drawing</h1>
+    </header>
+    <main class="flex-1 overflow-y-auto p-2 md:p-6">
+        <section class="section-card">
+            <div id="toolSummary" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; font-weight: 700; font-size: 1.1rem;">
+                <span id="summaryTool" style="display: flex; align-items: center; gap: 0.3rem;"><span class="material-icons" id="summaryToolIcon">edit</span><span id="summaryToolName">Pencil</span></span>
+                <span>Color: <span id="summaryColorName">Black</span></span>
+                <span>Size: <span id="summarySize">4</span></span>
+            </div>
+            <div class="toolbar toolbar-scroll" style="margin-bottom: 0.5rem; border-bottom: 2px solid #e0e0e0; padding-bottom: 0.5rem; overflow-x: auto; width: 100%; white-space: nowrap;">
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <button id="tool-pencil" class="tool-btn active" onclick="setTool('pencil')" title="Pencil"><span class="material-icons">edit</span></button>
+                    <button id="tool-brush" class="tool-btn" onclick="setTool('brush')" title="Brush"><span class="material-icons">brush</span></button>
+                    <button id="tool-airbrush" class="tool-btn" onclick="setTool('airbrush')" title="Airbrush"><span class="material-icons">blur_on</span></button>
+                    <button id="tool-eraser" class="tool-btn" onclick="setTool('eraser')" title="Eraser"><span class="material-icons">auto_fix_normal</span></button>
+                    <button id="tool-fill" class="tool-btn" onclick="setTool('fill')" title="Fill with Color"><span class="material-icons">format_color_fill</span></button>
+                    <button id="tool-magnifier" class="tool-btn" onclick="setTool('magnifier')" title="Magnifier"><span class="material-icons">search</span></button>
+                    <button id="tool-text" class="tool-btn" onclick="setTool('text')" title="Text"><span class="material-icons">title</span></button>
+                    <button id="tool-select" class="tool-btn" onclick="setTool('select')" title="Selection Tool"><span class="material-icons">select_all</span></button>
+                </div>
+            </div>
+            <div class="toolbar toolbar-scroll" style="margin-bottom: 0.5rem; border-bottom: 2px solid #e0e0e0; padding-bottom: 0.5rem; overflow-x: auto; width: 100%; white-space: nowrap;">
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <button id="tool-circle" class="tool-btn" onclick="setTool('circle')" title="Circle"><span class="material-icons">circle</span></button>
+                    <button id="tool-square" class="tool-btn" onclick="setTool('square')" title="Square"><span class="material-icons">crop_square</span></button>
+                    <button id="tool-rect" class="tool-btn" onclick="setTool('rect')" title="Rectangle"><span class="material-icons">rectangle</span></button>
+                    <button id="tool-triangle" class="tool-btn" onclick="setTool('triangle')" title="Triangle"><span class="material-icons">change_history</span></button>
+                    <button id="tool-oval" class="tool-btn" onclick="setTool('oval')" title="Oval"><span class="material-icons">panorama_fish_eye</span></button>
+                    <button id="tool-pentagon" class="tool-btn" onclick="setTool('pentagon')" title="Pentagon"><span class="material-icons">pentagon</span></button>
+                    <button id="tool-hexagon" class="tool-btn" onclick="setTool('hexagon')" title="Hexagon"><span class="material-icons">hexagon</span></button>
+                    <button id="tool-heptagon" class="tool-btn" onclick="setTool('heptagon')" title="Heptagon"><span class="material-icons">7k</span></button>
+                    <button id="tool-octagon" class="tool-btn" onclick="setTool('octagon')" title="Octagon"><span class="material-icons">8k</span></button>
+                    <button id="tool-nonagon" class="tool-btn" onclick="setTool('nonagon')" title="Nonagon"><span class="material-icons">9k</span></button>
+                    <button id="tool-decagon" class="tool-btn" onclick="setTool('decagon')" title="Decagon"><span class="material-icons">10k</span></button>
+                    <button id="tool-ellipse" class="tool-btn" onclick="setTool('ellipse')" title="Ellipse"><span class="material-icons">panorama_fish_eye</span></button>
+                    <button id="tool-rhombus" class="tool-btn" onclick="setTool('rhombus')" title="Rhombus"><span class="material-icons">diamond</span></button>
+                    <button id="tool-trapezoid" class="tool-btn" onclick="setTool('trapezoid')" title="Trapezoid"><span class="material-icons">filter_frames</span></button>
+                    <button id="tool-parallelogram" class="tool-btn" onclick="setTool('parallelogram')" title="Parallelogram"><span class="material-icons">crop_16_9</span></button>
+                    <button id="tool-kite" class="tool-btn" onclick="setTool('kite')" title="Kite"><span class="material-icons">air</span></button>
+                    <button id="tool-rhomboid" class="tool-btn" onclick="setTool('rhomboid')" title="Rhomboid"><span class="material-icons">diamond</span></button>
+                    <button id="tool-star" class="tool-btn" onclick="setTool('star')" title="Star"><span class="material-icons">star</span></button>
+                    <button id="tool-crescent" class="tool-btn" onclick="setTool('crescent')" title="Crescent"><span class="material-icons">nightlight</span></button>
+                    <button id="tool-heart" class="tool-btn" onclick="setTool('heart')" title="Heart"><span class="material-icons">favorite</span></button>
+                </div>
+            </div>
+            <div class="toolbar" style="margin-bottom: 0.5rem; border-bottom: 2px solid #e0e0e0; padding-bottom: 0.5rem;">
+                <!-- Color & Size -->
+                <label>Color <input type="color" id="colorPicker" value="#222222" onchange="setColor(this.value)"></label>
+                <label>Size <input type="range" id="sizePicker" min="2" max="32" value="4" onchange="setSize(this.value)"></label>
+            </div>
+            <div class="drawing-board">
+                <canvas id="drawingCanvas" width="360" height="640"></canvas>
+            </div>
+            <div class="toolbar" style="margin-top: 1rem; justify-content: center; border-top: 2px solid #e0e0e0; padding-top: 0.5rem;">
+                <button onclick="openDrawing()"><span class="material-icons">folder_open</span> Open</button>
+                <button onclick="saveDrawing()"><span class="material-icons">save</span> Save</button>
+                <button onclick="downloadDrawing()"><span class="material-icons">download</span> Download</button>
+                <button onclick="clearCanvas()"><span class="material-icons">delete</span> Clear</button>
+            </div>
+        </section>
+    </main>
+    <footer class="footer-fixed shadow p-2 flex justify-around items-center">
+        <a href="home.html" class="footer-btn"><span class="material-icons">arrow_back</span>Back</a>
+        <a href="home.html" class="footer-btn active"><span class="material-icons">home</span>Home</a>
+        <a href="gallery.html" class="footer-btn"><span class="material-icons">photo_library</span>Gallery</a>
+    </footer>
+    <script>
+    // Drawing state
+    let tool = 'brush', drawing = false, startX = 0, startY = 0, color = '#222222', size = 4, canvas, ctx, savedImageData;
+    const toolNames = {
+        pencil: 'Pencil', brush: 'Brush', airbrush: 'Airbrush', eraser: 'Eraser', fill: 'Fill', magnifier: 'Magnifier', text: 'Text', select: 'Selection',
+        circle: 'Circle', square: 'Square', rect: 'Rectangle', triangle: 'Triangle', oval: 'Oval', pentagon: 'Pentagon', hexagon: 'Hexagon', heptagon: 'Heptagon', octagon: 'Octagon', nonagon: 'Nonagon', decagon: 'Decagon', ellipse: 'Ellipse', rhombus: 'Rhombus', trapezoid: 'Trapezoid', parallelogram: 'Parallelogram', kite: 'Kite', rhomboid: 'Rhomboid', star: 'Star', crescent: 'Crescent', heart: 'Heart', line: 'Line'
+    };
+    const toolIcons = {
+        pencil: 'edit', brush: 'brush', airbrush: 'blur_on', eraser: 'auto_fix_normal', fill: 'format_color_fill', magnifier: 'search', text: 'title', select: 'select_all',
+        circle: 'circle', square: 'crop_square', rect: 'rectangle', triangle: 'change_history', oval: 'panorama_fish_eye', pentagon: 'pentagon', hexagon: 'hexagon', heptagon: '7k', octagon: '8k', nonagon: '9k', decagon: '10k', ellipse: 'panorama_fish_eye', rhombus: 'diamond', trapezoid: 'filter_frames', parallelogram: 'crop_16_9', kite: 'air', rhomboid: 'diamond', star: 'star', crescent: 'nightlight', heart: 'favorite', line: 'show_chart'
+    };
+    function getColorName(hex) {
+        const colors = {
+            '#000000': 'Black', '#222222': 'Black', '#ffffff': 'White', '#ff0000': 'Red', '#00ff00': 'Lime', '#0000ff': 'Blue',
+            '#ffff00': 'Yellow', '#00ffff': 'Cyan', '#ff00ff': 'Magenta', '#808080': 'Gray', '#c0c0c0': 'Silver', '#800000': 'Maroon',
+            '#808000': 'Olive', '#008000': 'Green', '#800080': 'Purple', '#008080': 'Teal', '#b3e0ff': 'Light Blue', '#6fd0ff': 'Sky Blue',
+        };
+        hex = hex.toLowerCase();
+        if (colors[hex]) return colors[hex];
+        // Try to match short hex
+        if (hex.length === 7 && colors[hex.slice(0, 4) + hex.slice(4)]) return colors[hex.slice(0, 4) + hex.slice(4)];
+        return hex;
+    }
+    function updateToolSummary() {
+        document.getElementById('summaryToolIcon').textContent = toolIcons[tool] || 'edit';
+        document.getElementById('summaryToolName').textContent = toolNames[tool] || tool;
+        document.getElementById('summaryColorName').textContent = getColorName(color);
+        document.getElementById('summarySize').textContent = size;
+    }
+    function setTool(t) {
+        tool = t;
+        document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+        document.getElementById('tool-' + t).classList.add('active');
+        updateToolSummary();
+    }
+    function setColor(c) { color = c; updateToolSummary(); }
+    function setSize(s) { size = s; updateToolSummary(); }
+    window.onload = function() {
+        canvas = document.getElementById('drawingCanvas');
+        ctx = canvas.getContext('2d');
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        canvas.addEventListener('mousedown', startDraw);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', endDraw);
+        canvas.addEventListener('mouseleave', endDraw);
+        // Touch support
+        canvas.addEventListener('touchstart', e => { e.preventDefault(); startDraw(e.touches[0]); });
+        canvas.addEventListener('touchmove', e => { e.preventDefault(); draw(e.touches[0]); });
+        canvas.addEventListener('touchend', endDraw);
+        updateToolSummary();
+    };
+    function startDraw(e) {
+        drawing = true;
+        startX = (e.offsetX !== undefined ? e.offsetX : e.pageX - canvas.offsetLeft);
+        startY = (e.offsetY !== undefined ? e.offsetY : e.pageY - canvas.offsetTop);
+        if (tool === 'brush' || tool === 'eraser') {
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+        } else if (tool === 'rect' || tool === 'circle' || tool === 'line') {
+            savedImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        }
+    }
+    function draw(e) {
+        if (!drawing) return;
+        let x = (e.offsetX !== undefined ? e.offsetX : e.pageX - canvas.offsetLeft);
+        let y = (e.offsetY !== undefined ? e.offsetY : e.pageY - canvas.offsetTop);
+        if (tool === 'brush') {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = size;
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        } else if (tool === 'eraser') {
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = size + 8;
+            ctx.lineTo(x, y);
+            ctx.stroke();
+        } else if (tool === 'rect' || tool === 'circle' || tool === 'line') {
+            ctx.putImageData(savedImageData, 0, 0);
+            ctx.strokeStyle = color;
+            ctx.lineWidth = size;
+            if (tool === 'rect') {
+                ctx.strokeRect(startX, startY, x - startX, y - startY);
+            } else if (tool === 'circle') {
+                let r = Math.sqrt(Math.pow(x - startX, 2) + Math.pow(y - startY, 2));
+                ctx.beginPath();
+                ctx.arc(startX, startY, r, 0, 2 * Math.PI);
+                ctx.stroke();
+            } else if (tool === 'line') {
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            }
+        }
+    }
+    function endDraw(e) {
+        if (!drawing) return;
+        drawing = false;
+        if (tool === 'brush' || tool === 'eraser') {
+            ctx.closePath();
+        }
+    }
+    function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+    function saveDrawing() {
+        let data = canvas.toDataURL('image/png');
+        let gallery = JSON.parse(localStorage.getItem('gallery') || '[]');
+        gallery.push({ img: data, date: new Date().toISOString() });
+        localStorage.setItem('gallery', JSON.stringify(gallery));
+        alert('Drawing saved to Gallery!');
+    }
+    function downloadDrawing() {
+        let link = document.createElement('a');
+        link.download = 'drawing.jpg';
+        link.href = canvas.toDataURL('image/jpeg');
+        link.click();
+    }
+    function openDrawing() {
+        let input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = function(e) {
+            let file = e.target.files[0];
+            if (!file) return;
+            let reader = new FileReader();
+            reader.onload = function(evt) {
+                let img = new Image();
+                img.onload = function() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                };
+                img.src = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+        input.click();
+    }
+    </script>
+</body>
+</html> 
