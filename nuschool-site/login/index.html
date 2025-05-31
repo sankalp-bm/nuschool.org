@@ -1,0 +1,155 @@
+---
+layout: default
+title: Login
+---
+
+<div class="min-h-screen flex flex-col justify-center items-center bg-white">
+  <div class="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+    <div class="flex flex-col items-center mb-6">
+      <img src="/assets/nuschool-logo-short-whitebg.png" alt="nu logo" class="w-20 h-20 mb-2">
+      <h1 class="text-3xl font-bold text-[#b57b79]">nu school</h1>
+    </div>
+    <div class="flex justify-center mb-6">
+      <button id="teacherToggle" class="toggle-btn rounded-l-lg px-4 py-2 font-semibold border border-[#b57b79] text-[#b57b79] bg-white" onclick="showTeacher()">I am a Teacher</button>
+      <button id="studentToggle" class="toggle-btn rounded-r-lg px-4 py-2 font-semibold border border-[#b57b79] text-[#b57b79] bg-white" onclick="showStudent()">I am a Student</button>
+    </div>
+    <div id="teacherForm" class="hidden">
+      <h2 class="text-xl font-bold mb-4">Teacher Login</h2>
+      <form id="teacherLoginForm" onsubmit="return handleTeacherLogin(event)">
+        <input id="teacherUsername" type="text" placeholder="Username" class="w-full mb-3 px-4 py-2 border rounded-lg" />
+        <input id="teacherPassword" type="password" placeholder="Password" class="w-full mb-3 px-4 py-2 border rounded-lg" />
+        <button type="submit" class="w-full bg-[#b57b79] text-white py-2 rounded-lg font-bold">Login</button>
+        <div id="teacherError" class="text-red-500 text-sm mt-2 hidden"></div>
+      </form>
+      <div class="flex justify-between mt-4">
+        <a href="#" class="text-sm text-[#b57b79]">Forgot Password?</a>
+        <a href="/signup?role=teacher" class="text-sm text-[#b57b79] font-semibold">New Teacher? Request Access</a>
+      </div>
+    </div>
+    <div id="studentForm" class="hidden">
+      <h2 class="text-xl font-bold mb-4">Student Login</h2>
+      <button id="googleSignInBtn" type="button" class="w-full flex items-center justify-center bg-white border border-gray-300 rounded-lg py-2 mb-2 font-semibold"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-6 h-6 mr-2">Continue with Google</button>
+      <button id="facebookSignInBtn" type="button" class="w-full flex items-center justify-center bg-white border border-gray-300 rounded-lg py-2 mb-2 font-semibold"><img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" class="w-6 h-6 mr-2">Continue with Facebook</button>
+      <button id="showPhoneAuthBtn" type="button" class="w-full flex items-center justify-center bg-white border border-gray-300 rounded-lg py-2 mb-2 font-semibold"><span class="material-icons mr-2">phone</span>Sign in with Phone</button>
+      <div id="phoneAuthSection" class="hidden mt-2">
+        <form id="phoneAuthForm" onsubmit="return handlePhoneAuth(event)">
+          <input id="firebasePhone" type="text" placeholder="Phone Number" class="w-full mb-3 px-4 py-2 border rounded-lg" />
+          <div id="recaptcha-container" class="mb-3"></div>
+          <button type="submit" class="w-full bg-[#b57b79] text-white py-2 rounded-lg font-bold">Send Code</button>
+          <div id="phoneAuthError" class="text-red-500 text-sm mt-2 hidden"></div>
+        </form>
+        <form id="codeVerifyForm" class="hidden mt-2" onsubmit="return handleCodeVerify(event)">
+          <input id="firebaseCode" type="text" placeholder="Verification Code" class="w-full mb-3 px-4 py-2 border rounded-lg" />
+          <button type="submit" class="w-full bg-[#b57b79] text-white py-2 rounded-lg font-bold">Verify</button>
+          <div id="codeVerifyError" class="text-red-500 text-sm mt-2 hidden"></div>
+        </form>
+      </div>
+      <div class="flex justify-between mt-4">
+        <a href="#" class="text-sm text-[#b57b79]">Forgot 4-Digit Code?</a>
+        <a href="/signup?role=student" class="text-sm text-[#b57b79] font-semibold">New Student? Sign up</a>
+      </div>
+    </div>
+    <div class="mt-8 text-center">
+      <a href="/superuser-login" class="text-xs text-gray-400 underline">Superuser</a>
+    </div>
+  </div>
+</div>
+<script>
+function showTeacher() {
+  document.getElementById('teacherForm').classList.remove('hidden');
+  document.getElementById('studentForm').classList.add('hidden');
+  document.getElementById('teacherToggle').classList.add('bg-[#b57b79]', 'text-white');
+  document.getElementById('studentToggle').classList.remove('bg-[#b57b79]', 'text-white');
+}
+function showStudent() {
+  document.getElementById('studentForm').classList.remove('hidden');
+  document.getElementById('teacherForm').classList.add('hidden');
+  document.getElementById('studentToggle').classList.add('bg-[#b57b79]', 'text-white');
+  document.getElementById('teacherToggle').classList.remove('bg-[#b57b79]', 'text-white');
+}
+// Default: show student form
+showStudent();
+
+function handleTeacherLogin(event) {
+  event.preventDefault();
+  const username = document.getElementById('teacherUsername').value.trim();
+  const password = document.getElementById('teacherPassword').value.trim();
+  const errorDiv = document.getElementById('teacherError');
+  if (username === 'teacher' && password === 'teacher') {
+    window.location.href = '/teacher-landing/';
+    return false;
+  } else {
+    errorDiv.textContent = 'Invalid username or password.';
+    errorDiv.classList.remove('hidden');
+    return false;
+  }
+}
+
+document.getElementById('googleSignInBtn').onclick = function() {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider)
+    .then((result) => {
+      window.location.href = '/';
+    })
+    .catch((error) => {
+      alert('Google sign-in failed: ' + error.message);
+    });
+};
+
+document.getElementById('facebookSignInBtn').onclick = function() {
+  const provider = new firebase.auth.FacebookAuthProvider();
+  firebase.auth().signInWithPopup(provider)
+    .then((result) => {
+      window.location.href = '/';
+    })
+    .catch((error) => {
+      alert('Facebook sign-in failed: ' + error.message);
+    });
+};
+
+document.getElementById('showPhoneAuthBtn').onclick = function() {
+  document.getElementById('phoneAuthSection').classList.toggle('hidden');
+  if (!window.recaptchaVerifier) {
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+      size: 'normal',
+      callback: function(response) {},
+      'expired-callback': function() {}
+    });
+    window.recaptchaVerifier.render();
+  }
+};
+
+function handlePhoneAuth(event) {
+  event.preventDefault();
+  const phone = document.getElementById('firebasePhone').value.trim();
+  const errorDiv = document.getElementById('phoneAuthError');
+  errorDiv.classList.add('hidden');
+  firebase.auth().signInWithPhoneNumber(phone, window.recaptchaVerifier)
+    .then((confirmationResult) => {
+      window.confirmationResult = confirmationResult;
+      document.getElementById('phoneAuthForm').classList.add('hidden');
+      document.getElementById('codeVerifyForm').classList.remove('hidden');
+    })
+    .catch((error) => {
+      errorDiv.textContent = error.message;
+      errorDiv.classList.remove('hidden');
+    });
+  return false;
+}
+
+function handleCodeVerify(event) {
+  event.preventDefault();
+  const code = document.getElementById('firebaseCode').value.trim();
+  const errorDiv = document.getElementById('codeVerifyError');
+  errorDiv.classList.add('hidden');
+  window.confirmationResult.confirm(code)
+    .then((result) => {
+      window.location.href = '/';
+    })
+    .catch((error) => {
+      errorDiv.textContent = error.message;
+      errorDiv.classList.remove('hidden');
+    });
+  return false;
+}
+</script> 

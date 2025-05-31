@@ -1,0 +1,187 @@
+---
+title: My Profile
+layout: default
+---
+<main class="flex-1 overflow-y-auto p-2 md:p-6">
+  <section class="section-card profile-card">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h2 class="section-title scholar"><span class="section-icon material-icons">person</span>My Profile</h2>
+      <button id="editBtn" class="edit-btn" onclick="toggleEditMode(true)" title="Edit Profile"><span class="material-icons">edit</span></button>
+      <button id="saveBtn" class="action-btn" style="display:none; margin-left:1rem;" onclick="saveProfile()"><span class="material-icons">save</span> Save</button>
+    </div>
+    <form id="profileForm">
+      <div class="profile-section">
+        <h3><span class="material-icons">face</span> I am</h3>
+        <div class="profile-view" id="viewMyName"></div>
+        <input type="text" id="myName" placeholder="Your Name" class="profile-input profile-edit" style="display:none;" />
+        <img id="myPhotoPreview" class="profile-photo-preview" style="display:none;" />
+        <input type="file" id="myPhoto" accept="image/*" class="profile-photo-input profile-edit" style="display:none;" />
+      </div>
+      <div class="profile-section">
+        <h3><span class="material-icons">star</span> I want to be</h3>
+        <div class="profile-view" id="viewMyDream"></div>
+        <input type="text" id="myDream" placeholder="I want to be..." class="profile-input profile-edit" style="display:none;" />
+        <img id="myDreamPhotoPreview" class="profile-photo-preview" style="display:none;" />
+        <input type="file" id="myDreamPhoto" accept="image/*" class="profile-photo-input profile-edit" style="display:none;" />
+      </div>
+      <div class="profile-section">
+        <h3><span class="material-icons">emoji_people</span> About Me</h3>
+        <div class="profile-view" id="viewAboutMe"></div>
+        <textarea id="aboutMe" placeholder="Tell us about yourself!" class="profile-input profile-edit" style="display:none;"></textarea>
+      </div>
+      <div class="profile-section">
+        <h3><span class="material-icons">school</span> School</h3>
+        <div class="profile-view" id="viewMySchool"></div>
+        <input type="text" id="mySchool" placeholder="School Name" class="profile-input profile-edit" style="display:none;" />
+        <img id="mySchoolPhotoPreview" class="profile-photo-preview" style="display:none;" />
+        <input type="file" id="mySchoolPhoto" accept="image/*" class="profile-photo-input profile-edit" style="display:none;" />
+      </div>
+      <div class="profile-section">
+        <h3><span class="material-icons">family_restroom</span> Parent</h3>
+        <div class="profile-view" id="viewFatherName"></div>
+        <input type="text" id="fatherName" placeholder="Father's Name" class="profile-input profile-edit" style="display:none;" />
+        <img id="fatherPhotoPreview" class="profile-photo-preview" style="display:none;" />
+        <input type="file" id="fatherPhoto" accept="image/*" class="profile-photo-input profile-edit" style="display:none;" />
+        <div class="profile-view" id="viewMotherName"></div>
+        <input type="text" id="motherName" placeholder="Mother's Name" class="profile-input profile-edit" style="display:none;" />
+        <img id="motherPhotoPreview" class="profile-photo-preview" style="display:none;" />
+        <input type="file" id="motherPhoto" accept="image/*" class="profile-photo-input profile-edit" style="display:none;" />
+      </div>
+      <div class="profile-section">
+        <h3><span class="material-icons">favorite</span> Favourite</h3>
+        <div class="profile-view" id="viewFavColour"></div>
+        <input type="text" id="favColour" placeholder="Favourite Colour" class="profile-input profile-edit" style="display:none;" />
+        <img id="favColourPhotoPreview" class="profile-photo-preview" style="display:none;" />
+        <input type="file" id="favColourPhoto" accept="image/*" class="profile-photo-input profile-edit" style="display:none;" />
+        <div class="profile-view" id="viewFavSport"></div>
+        <input type="text" id="favSport" placeholder="Favourite Sport" class="profile-input profile-edit" style="display:none;" />
+        <img id="favSportPhotoPreview" class="profile-photo-preview" style="display:none;" />
+        <input type="file" id="favSportPhoto" accept="image/*" class="profile-photo-input profile-edit" style="display:none;" />
+        <div class="profile-view" id="viewFavFruit"></div>
+        <input type="text" id="favFruit" placeholder="Favourite Fruit" class="profile-input profile-edit" style="display:none;" />
+        <img id="favFruitPhotoPreview" class="profile-photo-preview" style="display:none;" />
+        <input type="file" id="favFruitPhoto" accept="image/*" class="profile-photo-input profile-edit" style="display:none;" />
+        <div class="profile-view" id="viewFavAnimal"></div>
+        <input type="text" id="favAnimal" placeholder="Favourite Animal" class="profile-input profile-edit" style="display:none;" />
+        <img id="favAnimalPhotoPreview" class="profile-photo-preview" style="display:none;" />
+        <input type="file" id="favAnimalPhoto" accept="image/*" class="profile-photo-input profile-edit" style="display:none;" />
+      </div>
+    </form>
+  </section>
+</main>
+
+<style>
+.profile-card { background: #F7CAC9; }
+.profile-section { margin-bottom: 2rem; padding: 1rem; border-radius: 1rem; background: #ffe6e6; box-shadow: 0 2px 8px #e0bfcf33; }
+.profile-section h3 { color: black; font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+.profile-input { display: block; width: 100%; margin-bottom: 0.5rem; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #ffe6e6; font-size: 1rem; }
+.profile-photo-input { margin-bottom: 0.5rem; }
+.profile-photo-preview { max-width: 120px; max-height: 120px; border-radius: 1rem; margin-bottom: 0.5rem; display: block; }
+.action-btn { background: #B57b79; color: #fff; border: none; border-radius: 0.7rem; padding: 0.7rem 1.5rem; font-size: 1.1rem; cursor: pointer; margin-top: 1rem; }
+.action-btn .material-icons { vertical-align: middle; margin-right: 0.3rem; }
+.edit-btn { background: #fff; color: #B57b79; border: 2px solid #B57b79; border-radius: 50%; padding: 0.5rem; font-size: 1.3rem; cursor: pointer; box-shadow: 0 2px 8px #e0bfcf33; }
+.edit-btn .material-icons { font-size: 1.3rem; }
+</style>
+
+<script>
+function previewPhoto(inputId, previewId) {
+  const input = document.getElementById(inputId);
+  const preview = document.getElementById(previewId);
+  if (input.files && input.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      preview.src = e.target.result;
+      preview.style.display = 'block';
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+['myPhoto','myDreamPhoto','mySchoolPhoto','fatherPhoto','motherPhoto','favColourPhoto','favSportPhoto','favFruitPhoto','favAnimalPhoto'].forEach(id => {
+  document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById(id);
+    if(input) input.addEventListener('change', () => previewPhoto(id, id+'Preview'));
+  });
+});
+
+function toggleEditMode(edit) {
+  const editFields = document.querySelectorAll('.profile-edit');
+  const viewFields = document.querySelectorAll('.profile-view');
+  document.getElementById('editBtn').style.display = edit ? 'none' : 'inline-block';
+  document.getElementById('saveBtn').style.display = edit ? 'inline-block' : 'none';
+  editFields.forEach(f => f.style.display = edit ? '' : 'none');
+  viewFields.forEach(f => f.style.display = edit ? 'none' : '');
+}
+
+function renderProfileView(profile) {
+  document.getElementById('viewMyName').textContent = profile.myName || '';
+  document.getElementById('viewMyDream').textContent = profile.myDream || '';
+  document.getElementById('viewAboutMe').textContent = profile.aboutMe || '';
+  document.getElementById('viewMySchool').textContent = profile.mySchool || '';
+  document.getElementById('viewFatherName').textContent = profile.fatherName ? 'Father: ' + profile.fatherName : '';
+  document.getElementById('viewMotherName').textContent = profile.motherName ? 'Mother: ' + profile.motherName : '';
+  document.getElementById('viewFavColour').textContent = profile.favColour ? 'Colour: ' + profile.favColour : '';
+  document.getElementById('viewFavSport').textContent = profile.favSport ? 'Sport: ' + profile.favSport : '';
+  document.getElementById('viewFavFruit').textContent = profile.favFruit ? 'Fruit: ' + profile.favFruit : '';
+  document.getElementById('viewFavAnimal').textContent = profile.favAnimal ? 'Animal: ' + profile.favAnimal : '';
+  // Images
+  function showImg(id, src) {
+    const img = document.getElementById(id);
+    if (src && src.startsWith('data:')) { img.src = src; img.style.display = 'block'; } else { img.style.display = 'none'; }
+  }
+  showImg('myPhotoPreview', profile.myPhoto);
+  showImg('myDreamPhotoPreview', profile.myDreamPhoto);
+  showImg('mySchoolPhotoPreview', profile.mySchoolPhoto);
+  showImg('fatherPhotoPreview', profile.fatherPhoto);
+  showImg('motherPhotoPreview', profile.motherPhoto);
+  showImg('favColourPhotoPreview', profile.favColourPhoto);
+  showImg('favSportPhotoPreview', profile.favSportPhoto);
+  showImg('favFruitPhotoPreview', profile.favFruitPhoto);
+  showImg('favAnimalPhotoPreview', profile.favAnimalPhoto);
+}
+
+function saveProfile() {
+  const profile = {
+    myName: document.getElementById('myName').value,
+    myPhoto: document.getElementById('myPhotoPreview').src,
+    myDream: document.getElementById('myDream').value,
+    myDreamPhoto: document.getElementById('myDreamPhotoPreview').src,
+    aboutMe: document.getElementById('aboutMe').value,
+    mySchool: document.getElementById('mySchool').value,
+    mySchoolPhoto: document.getElementById('mySchoolPhotoPreview').src,
+    fatherName: document.getElementById('fatherName').value,
+    fatherPhoto: document.getElementById('fatherPhotoPreview').src,
+    motherName: document.getElementById('motherName').value,
+    motherPhoto: document.getElementById('motherPhotoPreview').src,
+    favColour: document.getElementById('favColour').value,
+    favColourPhoto: document.getElementById('favColourPhotoPreview').src,
+    favSport: document.getElementById('favSport').value,
+    favSportPhoto: document.getElementById('favSportPhotoPreview').src,
+    favFruit: document.getElementById('favFruit').value,
+    favFruitPhoto: document.getElementById('favFruitPhotoPreview').src,
+    favAnimal: document.getElementById('favAnimal').value,
+    favAnimalPhoto: document.getElementById('favAnimalPhotoPreview').src
+  };
+  localStorage.setItem('profile', JSON.stringify(profile));
+  renderProfileView(profile);
+  toggleEditMode(false);
+  alert('Profile saved!');
+}
+
+// On load: show view mode and load profile
+window.addEventListener('DOMContentLoaded', function() {
+  const profile = JSON.parse(localStorage.getItem('profile') || '{}');
+  renderProfileView(profile);
+  toggleEditMode(false);
+  // Fill edit fields
+  document.getElementById('myName').value = profile.myName || '';
+  document.getElementById('myDream').value = profile.myDream || '';
+  document.getElementById('aboutMe').value = profile.aboutMe || '';
+  document.getElementById('mySchool').value = profile.mySchool || '';
+  document.getElementById('fatherName').value = profile.fatherName || '';
+  document.getElementById('motherName').value = profile.motherName || '';
+  document.getElementById('favColour').value = profile.favColour || '';
+  document.getElementById('favSport').value = profile.favSport || '';
+  document.getElementById('favFruit').value = profile.favFruit || '';
+  document.getElementById('favAnimal').value = profile.favAnimal || '';
+});
+</script> 
