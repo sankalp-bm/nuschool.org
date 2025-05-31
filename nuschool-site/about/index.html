@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maths</title>
+  <title>About</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -36,7 +36,7 @@
     <button class="menu-btn" aria-label="Menu" onclick="toggleMenuDropdown(event)">
         <span class="material-icons">menu</span>
     </button>
-    <h1>Maths</h1>
+    <h1>About</h1>
     <div id="menuDropdown" style="display:none; position:absolute; left:1rem; top:58px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.12); border-radius:0.5rem; min-width:140px; z-index:200;">
         <a href="/profile.html" style="display:block; width:100%; padding:0.75rem 1.25rem; color:#8e24aa; text-decoration:none; font-weight:600; border-bottom:1px solid #eee;">Profile</a>
         <button onclick="openContactModal()" style="display:block; width:100%; padding:0.75rem 1.25rem; color:#2196f3; background:none; border:none; text-align:left; font-weight:600; border-bottom:1px solid #eee;">Contact Us</button>
@@ -85,28 +85,28 @@ function logoutAndRedirect(event) {
     window.location.href = '/login/';
 }
 </script>
-  <main class="flex-1 overflow-y-auto p-2 md:p-6">
-  <section class="section-card">
-    <h2 class="section-title scholar">
-      <span class="section-icon material-icons">calculate</span>
-      Maths Categories
-    </h2>
-    <div class="category-grid">
-      <a href="/home/be_scholar/maths/operations/" class="category-btn2 cat-maths">
-        <span class="cat-icon material-icons">calculate</span>Operations
-      </a>
-      <a href="/home/be_scholar/maths/measurement/" class="category-btn2 cat-maths">
-        <span class="cat-icon material-icons">straighten</span>Measurement
-      </a>
-      <a href="/home/be_scholar/maths/shapes/" class="category-btn2 cat-maths">
-        <span class="cat-icon material-icons">category</span>Shapes
-      </a>
-      <a href="/home/be_scholar/maths/logic/" class="category-btn2 cat-maths">
-        <span class="cat-icon material-icons">psychology</span>Logic
-      </a>
-    </div>
-  </section>
-</main>
+  <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">About</h1>
+  </header>
+
+  <div class="post-content">
+    <p>This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at <a href="https://jekyllrb.com/">jekyllrb.com</a></p>
+
+<p>You can find the source code for Minima at GitHub:
+<a href="https://github.com/jekyll">jekyll</a> /
+<a href="https://github.com/jekyll/minima">minima</a></p>
+
+<p>You can find the source code for Jekyll at GitHub:
+<a href="https://github.com/jekyll">jekyll</a> /
+<a href="https://github.com/jekyll/jekyll">jekyll</a></p>
+
+
+  </div>
+
+</article>
+
   <footer class="footer-fixed shadow flex justify-around items-center" style="padding-bottom: 24px;">
     <a href="javascript:history.back()" class="footer-btn"><span class="material-icons">arrow_circle_left</span>Back</a>
     <a href="/" class="footer-btn active"><span class="material-icons">home_work</span>Home</a>

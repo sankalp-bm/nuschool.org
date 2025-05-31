@@ -1,6 +1,96 @@
----
-layout: default
-title: English Stories
----
-<h2>This is the English Stories page!</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Stories</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap" rel="stylesheet">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XJMET9BSRT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XJMET9BSRT');
+  </script>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyARBJ5vSPAZfbPSA_aBUNxo9oXiKU4TTco",
+      authDomain: "nuschool-3c9d4.firebaseapp.com",
+      projectId: "nuschool-3c9d4",
+      storageBucket: "nuschool-3c9d4.firebasestorage.app",
+      messagingSenderId: "526142689541",
+      appId: "1:526142689541:web:97022175d105851d96276c"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+</head>
+<body>
+  <header class="header-bar" style="position: relative;">
+    <button class="menu-btn" aria-label="Menu" onclick="toggleMenuDropdown(event)">
+        <span class="material-icons">menu</span>
+    </button>
+    <h1>English Stories</h1>
+    <div id="menuDropdown" style="display:none; position:absolute; left:1rem; top:58px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.12); border-radius:0.5rem; min-width:140px; z-index:200;">
+        <a href="/profile.html" style="display:block; width:100%; padding:0.75rem 1.25rem; color:#8e24aa; text-decoration:none; font-weight:600; border-bottom:1px solid #eee;">Profile</a>
+        <button onclick="openContactModal()" style="display:block; width:100%; padding:0.75rem 1.25rem; color:#2196f3; background:none; border:none; text-align:left; font-weight:600; border-bottom:1px solid #eee;">Contact Us</button>
+        <a href="#" onclick="logoutAndRedirect(event)" style="display:block; width:100%; padding:0.75rem 1.25rem; color:#e53935; text-decoration:none; font-weight:600;">Logout</a>
+    </div>
+</header>
+<div id="contactModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:1rem; max-width:90vw; width:400px; margin:auto; padding:2rem; position:relative; display:flex; flex-direction:column; max-height:80vh; overflow-y:auto;">
+    <h2 style="font-size:1.5rem; font-weight:700; color:#b57b79; margin-bottom:1rem;">Contact Us</h2>
+    <p style="margin-bottom:1rem;">This app was thoughtfully designed and created by Sankalp G Sharma.</p>
+    <p style="margin-bottom:0.5rem;"><b>For any feedback, complaints, or suggestions, please feel free to reach out using the details below:</b></p>
+    <p style="margin-bottom:0.5rem;"><span class="material-icons" style="vertical-align:middle;">call</span> 7676885989</p>
+    <p style="margin-bottom:1rem;"><span class="material-icons" style="vertical-align:middle;">email</span> sankalp.bm@gmail.com</p>
+    <button onclick="closeContactModal()" style="margin-top:1rem; background:#b57b79; color:#fff; border:none; border-radius:0.5rem; padding:0.75rem; font-weight:700; font-size:1rem;">Close</button>
+  </div>
+</div>
+<script>
+function toggleMenuDropdown(event) {
+    event.stopPropagation();
+    var dropdown = document.getElementById('menuDropdown');
+    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+        dropdown.style.display = 'block';
+        document.addEventListener('click', closeMenuDropdown);
+    } else {
+        dropdown.style.display = 'none';
+        document.removeEventListener('click', closeMenuDropdown);
+    }
+}
+function closeMenuDropdown(e) {
+    var dropdown = document.getElementById('menuDropdown');
+    if (!dropdown.contains(e.target)) {
+        dropdown.style.display = 'none';
+        document.removeEventListener('click', closeMenuDropdown);
+    }
+}
+function openContactModal() {
+    document.getElementById('contactModal').style.display = 'flex';
+}
+function closeContactModal() {
+    document.getElementById('contactModal').style.display = 'none';
+}
+function logoutAndRedirect(event) {
+    event.preventDefault();
+    // If you use authentication, clear tokens/cookies here
+    // Example: localStorage.removeItem('authToken');
+    window.location.href = '/login/';
+}
+</script>
+  <h2>This is the English Stories page!</h2>
 <p>If you see this, the page is working and using your layout and styles.</p>
+  <footer class="footer-fixed shadow flex justify-around items-center" style="padding-bottom: 24px;">
+    <a href="javascript:history.back()" class="footer-btn"><span class="material-icons">arrow_circle_left</span>Back</a>
+    <a href="/" class="footer-btn active"><span class="material-icons">home_work</span>Home</a>
+    <a href="/gallery.html" class="footer-btn"><span class="material-icons">collections</span>Gallery</a>
+</footer>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Maths</title>
+  <title>Welcome to Jekyll!</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -36,7 +36,7 @@
     <button class="menu-btn" aria-label="Menu" onclick="toggleMenuDropdown(event)">
         <span class="material-icons">menu</span>
     </button>
-    <h1>Maths</h1>
+    <h1>Welcome to Jekyll!</h1>
     <div id="menuDropdown" style="display:none; position:absolute; left:1rem; top:58px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.12); border-radius:0.5rem; min-width:140px; z-index:200;">
         <a href="/profile.html" style="display:block; width:100%; padding:0.75rem 1.25rem; color:#8e24aa; text-decoration:none; font-weight:600; border-bottom:1px solid #eee;">Profile</a>
         <button onclick="openContactModal()" style="display:block; width:100%; padding:0.75rem 1.25rem; color:#2196f3; background:none; border:none; text-align:left; font-weight:600; border-bottom:1px solid #eee;">Contact Us</button>
@@ -85,28 +85,38 @@ function logoutAndRedirect(event) {
     window.location.href = '/login/';
 }
 </script>
-  <main class="flex-1 overflow-y-auto p-2 md:p-6">
-  <section class="section-card">
-    <h2 class="section-title scholar">
-      <span class="section-icon material-icons">calculate</span>
-      Maths Categories
-    </h2>
-    <div class="category-grid">
-      <a href="/home/be_scholar/maths/operations/" class="category-btn2 cat-maths">
-        <span class="cat-icon material-icons">calculate</span>Operations
-      </a>
-      <a href="/home/be_scholar/maths/measurement/" class="category-btn2 cat-maths">
-        <span class="cat-icon material-icons">straighten</span>Measurement
-      </a>
-      <a href="/home/be_scholar/maths/shapes/" class="category-btn2 cat-maths">
-        <span class="cat-icon material-icons">category</span>Shapes
-      </a>
-      <a href="/home/be_scholar/maths/logic/" class="category-btn2 cat-maths">
-        <span class="cat-icon material-icons">psychology</span>Logic
-      </a>
-    </div>
-  </section>
-</main>
+  <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Welcome to Jekyll!</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2025-05-10T04:51:47+05:30" itemprop="datePublished">May 10, 2025
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>You’ll find this post in your <code class="language-plaintext highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="language-plaintext highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+
+<p>Jekyll requires blog post files to be named according to the following format:</p>
+
+<p><code class="language-plaintext highlighter-rouge">YEAR-MONTH-DAY-title.MARKUP</code></p>
+
+<p>Where <code class="language-plaintext highlighter-rouge">YEAR</code> is a four-digit number, <code class="language-plaintext highlighter-rouge">MONTH</code> and <code class="language-plaintext highlighter-rouge">DAY</code> are both two-digit numbers, and <code class="language-plaintext highlighter-rouge">MARKUP</code> is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+
+<p>Jekyll also offers powerful support for code snippets:</p>
+
+<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
+  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
+<span class="k">end</span>
+<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
+<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
+
+<p>Check out the <a href="https://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>
+
+
+  </div><a class="u-url" href="/jekyll/update/2025/05/10/welcome-to-jekyll.html" hidden></a>
+</article>
+
   <footer class="footer-fixed shadow flex justify-around items-center" style="padding-bottom: 24px;">
     <a href="javascript:history.back()" class="footer-btn"><span class="material-icons">arrow_circle_left</span>Back</a>
     <a href="/" class="footer-btn active"><span class="material-icons">home_work</span>Home</a>
