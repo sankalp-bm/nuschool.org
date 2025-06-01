@@ -5,28 +5,154 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Drawing - KidLearn AI</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #F0FFFF; font-family: 'Nunito', Arial, sans-serif; }
-        .header-footer-bg { background: #6fd0ff !important; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem; }
+        body {
+            background: linear-gradient(135deg, #F0FFFF 60%, #B6E2FF 100%);
+            font-family: 'Nunito', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
+        }
+        .header-bar {
+            background: #b57b79 !important;
+            border-bottom-left-radius: 0rem;
+            border-bottom-right-radius: 0rem;
+            height: 58px;
+            min-height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+        }
+        .header-bar .menu-btn {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .header-bar h1 {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto;
+        }
+        .footer-fixed {
+            background: #b57b79 !important;
+            border-radius: 0;
+            box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+            position: fixed !important;
+            bottom: 0; left: 0; right: 0;
+            height: 58px;
+            min-height: 58px;
+            z-index: 100;
+            width: 100%;
+        }
+        .footer-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 12.65px;
+            margin: 0 0.2rem;
+            text-decoration: none;
+        }
+        .footer-btn .material-icons {
+            background: #b57b79;
+            color: #fff;
+            border-radius: 50%;
+            padding: 1.15rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.1rem;
+        }
+        .footer-btn.active { color: #fff; }
+        .footer-btn.active .material-icons {
+            background: #b57b79;
+            color: #fff;
+        }
+        main {
+            flex: 1 0 auto;
+            padding-bottom: 90px;
+            margin-top: 68px;
+        }
         .section-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 2rem 1rem 1.5rem 1rem; margin: 2rem auto; max-width: 700px; }
         .section-title { font-size: 1.5rem !important; font-weight: 800; display: flex; align-items: center; margin-bottom: 1.5rem; color: #39b6ff; }
         .section-title .section-icon { font-size: 2rem !important; margin-right: 0.75rem; }
-        .toolbar { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; align-items: center; }
+        .toolbar {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            align-items: center;
+            border: none !important;
+            padding: 0.5rem 0 !important;
+        }
         .toolbar label { font-weight: 600; margin-right: 0.5rem; }
         .toolbar input[type='color'] { border: none; width: 2rem; height: 2rem; border-radius: 50%; }
         .toolbar select, .toolbar input[type='range'] { border-radius: 0.5rem; padding: 0.25rem 0.5rem; }
-        .toolbar button { background: #6fd0ff; color: #fff; border: none; border-radius: 0.75rem; padding: 0.5rem 1rem; font-weight: 700; margin-right: 0.5rem; transition: background 0.2s; }
+        .toolbar button {
+            background: #6fd0ff;
+            color: #fff;
+            border: none;
+            border-radius: 0.75rem;
+            padding: 0.4rem 0.8rem;
+            font-weight: 700;
+            margin-right: 0.5rem;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
         .toolbar button.active, .toolbar button:hover { background: #39b6ff; }
-        .drawing-board { background: #fff; border-radius: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,0.10); display: flex; justify-content: center; align-items: center; margin-bottom: 1rem; }
-        canvas { border-radius: 1rem; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .footer-fixed { background: #fff !important; border-top-left-radius: 2rem; border-top-right-radius: 2rem; box-shadow: 0 -2px 12px rgba(0,0,0,0.08); position: static !important; bottom: 0; left: 0; right: 0; }
-        .footer-btn { display: flex; flex-direction: column; align-items: center; color: #6fd0ff; font-weight: 700; }
-        .footer-btn.active { color: #003366; }
-        .footer-btn .material-icons { background: #6fd0ff; color: #fff; border-radius: 50%; padding: 0.5rem; font-size: 2rem; margin-bottom: 0.25rem; }
-        .footer-btn.active .material-icons { background: #003366; }
+        .drawing-board {
+            width: 668px;
+            height: 400px;
+            border: 2px solid #e0e0e0;
+            margin: 20px auto;
+            position: relative;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        canvas {
+            width: 668px;
+            height: 400px;
+            background: #fff;
+            display: block;
+            cursor: crosshair;
+        }
+        /* Add a subtle grid background */
+        .drawing-board::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(0,0,0,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.05) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 1;
+        }
+        /* Add a subtle hover effect */
+        .drawing-board:hover {
+            border-color: #6fd0ff;
+            box-shadow: 0 6px 16px rgba(111,208,255,0.2);
+        }
         .tool-btn span.material-icons { transition: color 0.1s; }
         .tool-btn.active span.material-icons { color: #003366 !important; }
         .tool-btn[title]:hover:after, .tool-btn[title]:focus:after {
@@ -58,14 +184,60 @@
         .toolbar-scroll::-webkit-scrollbar-track {
             background: transparent;
         }
+        .tool-btn.active#tool-eraser {
+            background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff, #ffff00, #ff00ff);
+            background-size: 400% 400%;
+            animation: rainbow 3s ease infinite;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+        .tool-btn.active#tool-eraser::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff, #ffff00, #ff00ff);
+            background-size: 400% 400%;
+            animation: rainbow 3s ease infinite;
+            border-radius: 0.75rem;
+            z-index: -1;
+        }
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* Custom cursors for different tools */
+        canvas[data-tool="brush"],
+        canvas[data-tool="pencil"] { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23000" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>') 0 24, auto; }
+
+        canvas[data-tool="eraser"] { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23000" d="M15.14 3c-.51 0-1.02.2-1.41.59L2.59 14.73c-.78.78-.78 2.04 0 2.82l4.24 4.24c.78.78 2.04.78 2.82 0L20.73 10.27c.39-.39.59-.9.59-1.41 0-.51-.2-1.02-.59-1.41L16.55 3.59c-.39-.39-.9-.59-1.41-.59zM14 15l-2 2H6l-4-4 2-2 4 4 6-6z"/></svg>') 0 24, auto; }
+
+        canvas[data-tool="fill"] { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23000" d="M16.56 8.94L7.62 0 6.21 1.41l2.38 2.38-5.15 5.15c-.59.59-.59 1.54 0 2.12l5.5 5.5c.29.29.68.44 1.06.44s.77-.15 1.06-.44l5.5-5.5c.59-.58.59-1.53 0-2.12zM5.21 10L10 5.21 14.79 10H5.21zM19 11.5s-2 2.17-2 3.5c0 1.1.9 2 2 2s2-.9 2-2c0-1.33-2-3.5-2-3.5z"/></svg>') 0 24, auto; }
+
+        canvas[data-tool="magnifier"] { cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23000" d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>') 0 24, auto; }
+
+        canvas[data-tool="text"] { cursor: text; }
+
+        canvas[data-tool="select"] { cursor: crosshair; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
-    <header class="header-footer-bg text-white p-4 flex items-center justify-center relative">
-        <a href="home.html" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white"><span class="material-icons" style="font-size: 2rem;">arrow_back</span></a>
-        <h1 class="text-2xl font-bold flex-1 text-center">Create Drawing</h1>
+<body>
+    <header class="header-bar" style="position: relative;">
+        <button class="menu-btn" aria-label="Menu" onclick="toggleMenuDropdown(event)">
+            <span class="material-icons">menu</span>
+        </button>
+        <h1>Create Drawing</h1>
+        <div id="menuDropdown" style="display:none; position:absolute; left:1rem; top:58px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.12); border-radius:0.5rem; min-width:140px; z-index:200;">
+            <a href="/contact.html" style="display:block; padding:0.75rem 1.25rem; color:#2196f3; text-decoration:none; font-weight:600; border-bottom:1px solid #eee;">Contact Us</a>
+            <a href="/login.html" style="display:block; padding:0.75rem 1.25rem; color:#e53935; text-decoration:none; font-weight:600;">Logout</a>
+        </div>
     </header>
-    <main class="flex-1 overflow-y-auto p-2 md:p-6">
+
+    <main>
         <section class="section-card">
             <div id="toolSummary" style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; font-weight: 700; font-size: 1.1rem;">
                 <span id="summaryTool" style="display: flex; align-items: center; gap: 0.3rem;"><span class="material-icons" id="summaryToolIcon">edit</span><span id="summaryToolName">Pencil</span></span>
@@ -124,14 +296,26 @@
             </div>
         </section>
     </main>
-    <footer class="footer-fixed shadow p-2 flex justify-around items-center">
-        <a href="home.html" class="footer-btn"><span class="material-icons">arrow_back</span>Back</a>
-        <a href="home.html" class="footer-btn active"><span class="material-icons">home</span>Home</a>
-        <a href="gallery.html" class="footer-btn"><span class="material-icons">photo_library</span>Gallery</a>
+
+    <footer class="footer-fixed shadow flex justify-around items-center">
+        <a href="javascript:history.back()" class="footer-btn"><span class="material-icons">arrow_back</span>Back</a>
+        <a href="/home.html" class="footer-btn active"><span class="material-icons">home</span>Home</a>
+        <a href="/gallery.html" class="footer-btn"><span class="material-icons">photo_library</span>Gallery</a>
     </footer>
+
     <script>
     // Drawing state
-    let tool = 'brush', drawing = false, startX = 0, startY = 0, color = '#222222', size = 4, canvas, ctx, savedImageData;
+    let tool = 'brush';
+    let color = '#000000';
+    let size = 2;
+    let drawing = false;
+    let startX, startY;
+    let savedImageData;
+    let textInput = null;
+    let magnifierScale = 1;
+    let selection = null;
+    let airbrushInterval = null;
+
     const toolNames = {
         pencil: 'Pencil', brush: 'Brush', airbrush: 'Airbrush', eraser: 'Eraser', fill: 'Fill', magnifier: 'Magnifier', text: 'Text', select: 'Selection',
         circle: 'Circle', square: 'Square', rect: 'Rectangle', triangle: 'Triangle', oval: 'Oval', pentagon: 'Pentagon', hexagon: 'Hexagon', heptagon: 'Heptagon', octagon: 'Octagon', nonagon: 'Nonagon', decagon: 'Decagon', ellipse: 'Ellipse', rhombus: 'Rhombus', trapezoid: 'Trapezoid', parallelogram: 'Parallelogram', kite: 'Kite', rhomboid: 'Rhomboid', star: 'Star', crescent: 'Crescent', heart: 'Heart', line: 'Line'
@@ -160,77 +344,387 @@
     }
     function setTool(t) {
         tool = t;
-        document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
-        document.getElementById('tool-' + t).classList.add('active');
+        canvas.setAttribute('data-tool', t);
         updateToolSummary();
+        // Clear any active intervals
+        if (airbrushInterval) {
+            clearInterval(airbrushInterval);
+            airbrushInterval = null;
+        }
     }
     function setColor(c) { color = c; updateToolSummary(); }
     function setSize(s) { size = s; updateToolSummary(); }
-    window.onload = function() {
+    function initCanvas() {
         canvas = document.getElementById('drawingCanvas');
         ctx = canvas.getContext('2d');
+        
+        // Set canvas dimensions
+        canvas.width = 668;
+        canvas.height = 400;
+        
+        // Set default styles
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
+        ctx.strokeStyle = color;
+        ctx.lineWidth = size;
+        
+        // Initialize with white background
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Add event listeners
         canvas.addEventListener('mousedown', startDraw);
         canvas.addEventListener('mousemove', draw);
         canvas.addEventListener('mouseup', endDraw);
         canvas.addEventListener('mouseleave', endDraw);
+        
         // Touch support
-        canvas.addEventListener('touchstart', e => { e.preventDefault(); startDraw(e.touches[0]); });
-        canvas.addEventListener('touchmove', e => { e.preventDefault(); draw(e.touches[0]); });
+        canvas.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            startDraw({ offsetX: x, offsetY: y });
+        });
+        
+        canvas.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const rect = canvas.getBoundingClientRect();
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            draw({ offsetX: x, offsetY: y });
+        });
+        
         canvas.addEventListener('touchend', endDraw);
+        
+        // Initialize tool summary
         updateToolSummary();
-    };
+    }
     function startDraw(e) {
         drawing = true;
-        startX = (e.offsetX !== undefined ? e.offsetX : e.pageX - canvas.offsetLeft);
-        startY = (e.offsetY !== undefined ? e.offsetY : e.pageY - canvas.offsetTop);
-        if (tool === 'brush' || tool === 'eraser') {
+        startX = e.offsetX;
+        startY = e.offsetY;
+        
+        if (tool === 'brush' || tool === 'pencil' || tool === 'eraser') {
             ctx.beginPath();
             ctx.moveTo(startX, startY);
-        } else if (tool === 'rect' || tool === 'circle' || tool === 'line') {
+        } else if (tool === 'rect' || tool === 'circle' || tool === 'line' || 
+                   tool === 'triangle' || tool === 'oval' || tool === 'pentagon' || 
+                   tool === 'hexagon' || tool === 'heptagon' || tool === 'octagon' || 
+                   tool === 'nonagon' || tool === 'decagon' || tool === 'ellipse' || 
+                   tool === 'rhombus' || tool === 'trapezoid' || tool === 'parallelogram' || 
+                   tool === 'kite' || tool === 'rhomboid' || tool === 'star' || 
+                   tool === 'crescent' || tool === 'heart') {
             savedImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         }
     }
     function draw(e) {
         if (!drawing) return;
-        let x = (e.offsetX !== undefined ? e.offsetX : e.pageX - canvas.offsetLeft);
-        let y = (e.offsetY !== undefined ? e.offsetY : e.pageY - canvas.offsetTop);
-        if (tool === 'brush') {
-            ctx.strokeStyle = color;
+        
+        const x = e.offsetX;
+        const y = e.offsetY;
+        
+        switch(tool) {
+            case 'brush':
+            case 'pencil':
+                ctx.strokeStyle = tool === 'eraser' ? '#ffffff' : color;
             ctx.lineWidth = size;
             ctx.lineTo(x, y);
             ctx.stroke();
-        } else if (tool === 'eraser') {
-            ctx.strokeStyle = '#fff';
-            ctx.lineWidth = size + 8;
+                break;
+                
+            case 'eraser':
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = size;
             ctx.lineTo(x, y);
             ctx.stroke();
-        } else if (tool === 'rect' || tool === 'circle' || tool === 'line') {
+                break;
+                
+            case 'airbrush':
+                if (!airbrushInterval) {
+                    airbrushInterval = setInterval(() => {
+                        for (let i = 0; i < 10; i++) {
+                            const offsetX = (Math.random() - 0.5) * size * 2;
+                            const offsetY = (Math.random() - 0.5) * size * 2;
+                            ctx.fillStyle = color;
+                            ctx.beginPath();
+                            ctx.arc(x + offsetX, y + offsetY, size/4, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    }, 16); // Increased frequency for smoother effect
+                }
+                break;
+                
+            case 'fill':
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const pixels = imageData.data;
+                const startPos = (y * canvas.width + x) * 4;
+                const startR = pixels[startPos];
+                const startG = pixels[startPos + 1];
+                const startB = pixels[startPos + 2];
+                
+                const fillColor = hexToRgb(color);
+                if (!fillColor) return;
+                
+                if (startR === fillColor.r && startG === fillColor.g && startB === fillColor.b) return;
+                
+                const stack = [[x, y]];
+                const visited = new Set();
+                
+                while (stack.length) {
+                    const [px, py] = stack.pop();
+                    const pos = (py * canvas.width + px) * 4;
+                    const key = `${px},${py}`;
+                    
+                    if (px < 0 || px >= canvas.width || py < 0 || py >= canvas.height) continue;
+                    if (visited.has(key)) continue;
+                    if (pixels[pos] !== startR || pixels[pos + 1] !== startG || pixels[pos + 2] !== startB) continue;
+                    
+                    visited.add(key);
+                    pixels[pos] = fillColor.r;
+                    pixels[pos + 1] = fillColor.g;
+                    pixels[pos + 2] = fillColor.b;
+                    pixels[pos + 3] = 255;
+                    
+                    stack.push([px + 1, py], [px - 1, py], [px, py + 1], [px, py - 1]);
+                }
+                
+                ctx.putImageData(imageData, 0, 0);
+                break;
+                
+            case 'magnifier':
+                if (magnifierScale < 4) {
+                    magnifierScale *= 1.1;
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.scale(magnifierScale, magnifierScale);
+                    ctx.translate(-x, -y);
+                    ctx.drawImage(canvas, 0, 0);
+                    ctx.restore();
+                }
+                break;
+                
+            case 'text':
+                if (!textInput) {
+                    textInput = document.createElement('input');
+                    textInput.type = 'text';
+                    textInput.style.position = 'absolute';
+                    textInput.style.left = (canvas.offsetLeft + x) + 'px';
+                    textInput.style.top = (canvas.offsetTop + y) + 'px';
+                    textInput.style.color = color;
+                    textInput.style.fontSize = size * 5 + 'px';
+                    textInput.style.background = 'transparent';
+                    textInput.style.border = 'none';
+                    textInput.style.outline = 'none';
+                    textInput.style.padding = '0';
+                    textInput.style.margin = '0';
+                    textInput.style.fontFamily = 'Arial';
+                    
+                    textInput.onblur = function() {
+                        ctx.font = size * 5 + 'px Arial';
+                        ctx.fillStyle = color;
+                        ctx.fillText(this.value, x, y);
+                        this.remove();
+                        textInput = null;
+                    };
+                    
+                    document.body.appendChild(textInput);
+                    textInput.focus();
+                }
+                break;
+                
+            case 'select':
+                if (!selection) {
+                    selection = { x: x, y: y, width: 0, height: 0 };
+                } else {
+                    selection.width = x - selection.x;
+                    selection.height = y - selection.y;
+                    ctx.putImageData(savedImageData, 0, 0);
+                    ctx.strokeStyle = '#000';
+                    ctx.setLineDash([5, 5]);
+                    ctx.strokeRect(selection.x, selection.y, selection.width, selection.height);
+                    ctx.setLineDash([]);
+                }
+                break;
+                
+            default:
+                if (savedImageData) {
             ctx.putImageData(savedImageData, 0, 0);
             ctx.strokeStyle = color;
             ctx.lineWidth = size;
-            if (tool === 'rect') {
-                ctx.strokeRect(startX, startY, x - startX, y - startY);
-            } else if (tool === 'circle') {
-                let r = Math.sqrt(Math.pow(x - startX, 2) + Math.pow(y - startY, 2));
-                ctx.beginPath();
-                ctx.arc(startX, startY, r, 0, 2 * Math.PI);
-                ctx.stroke();
-            } else if (tool === 'line') {
-                ctx.beginPath();
-                ctx.moveTo(startX, startY);
-                ctx.lineTo(x, y);
-                ctx.stroke();
-            }
+                    drawShape(tool, startX, startY, x, y);
+                }
+                break;
         }
     }
-    function endDraw(e) {
+    function drawShape(shape, x1, y1, x2, y2) {
+        const width = x2 - x1;
+        const height = y2 - y1;
+        
+                ctx.beginPath();
+        switch(shape) {
+            case 'square':
+                const squareSize = Math.max(Math.abs(width), Math.abs(height));
+                ctx.strokeRect(x1, y1, squareSize, squareSize);
+                break;
+                
+            case 'crescent':
+                const crescentCenterX = x1 + width/2;
+                const crescentCenterY = y1 + height/2;
+                const radius = Math.min(Math.abs(width), Math.abs(height)) / 2;
+                ctx.arc(crescentCenterX, crescentCenterY, radius, 0, Math.PI * 2);
+                ctx.arc(crescentCenterX + radius/2, crescentCenterY, radius/2, 0, Math.PI * 2, true);
+                ctx.stroke();
+                break;
+                
+            case 'heart':
+                const heartCenterX = x1 + width/2;
+                const heartCenterY = y1 + height/2;
+                const heartSize = Math.min(Math.abs(width), Math.abs(height)) / 2;
+                ctx.moveTo(heartCenterX, heartCenterY + heartSize/2);
+                ctx.bezierCurveTo(
+                    heartCenterX, heartCenterY + heartSize,
+                    heartCenterX - heartSize, heartCenterY + heartSize,
+                    heartCenterX - heartSize, heartCenterY
+                );
+                ctx.bezierCurveTo(
+                    heartCenterX - heartSize, heartCenterY - heartSize,
+                    heartCenterX, heartCenterY - heartSize,
+                    heartCenterX, heartCenterY
+                );
+                ctx.bezierCurveTo(
+                    heartCenterX, heartCenterY - heartSize,
+                    heartCenterX + heartSize, heartCenterY - heartSize,
+                    heartCenterX + heartSize, heartCenterY
+                );
+                ctx.bezierCurveTo(
+                    heartCenterX + heartSize, heartCenterY + heartSize,
+                    heartCenterX, heartCenterY + heartSize,
+                    heartCenterX, heartCenterY + heartSize/2
+                );
+                ctx.stroke();
+                break;
+                
+            case 'rect':
+                ctx.strokeRect(x1, y1, width, height);
+                break;
+            case 'circle':
+                const circleRadius = Math.sqrt(width * width + height * height);
+                ctx.arc(x1, y1, circleRadius, 0, Math.PI * 2);
+                ctx.stroke();
+                break;
+            case 'line':
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.stroke();
+                break;
+            case 'triangle':
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.lineTo(x1 - width, y2);
+                ctx.closePath();
+                ctx.stroke();
+                break;
+            case 'oval':
+            case 'ellipse':
+                ctx.ellipse(x1 + width/2, y1 + height/2, Math.abs(width/2), Math.abs(height/2), 0, 0, Math.PI * 2);
+                ctx.stroke();
+                break;
+            case 'pentagon':
+            case 'hexagon':
+            case 'heptagon':
+            case 'octagon':
+            case 'nonagon':
+            case 'decagon':
+                const sides = {
+                    'pentagon': 5, 'hexagon': 6, 'heptagon': 7,
+                    'octagon': 8, 'nonagon': 9, 'decagon': 10
+                }[shape];
+                const polygonCenterX = x1 + width/2;
+                const polygonCenterY = y1 + height/2;
+                const polygonRadius = Math.min(Math.abs(width), Math.abs(height)) / 2;
+                for (let i = 0; i < sides; i++) {
+                    const angle = (i * 2 * Math.PI / sides) - Math.PI/2;
+                    const x = polygonCenterX + polygonRadius * Math.cos(angle);
+                    const y = polygonCenterY + polygonRadius * Math.sin(angle);
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.stroke();
+                break;
+            case 'rhombus':
+                ctx.moveTo(x1 + width/2, y1);
+                ctx.lineTo(x2, y1 + height/2);
+                ctx.lineTo(x1 + width/2, y2);
+                ctx.lineTo(x1, y1 + height/2);
+                ctx.closePath();
+                ctx.stroke();
+                break;
+            case 'trapezoid':
+                ctx.moveTo(x1 + width/4, y1);
+                ctx.lineTo(x2 - width/4, y1);
+                ctx.lineTo(x2, y2);
+                ctx.lineTo(x1, y2);
+                ctx.closePath();
+                ctx.stroke();
+                break;
+            case 'parallelogram':
+                ctx.moveTo(x1 + width/4, y1);
+                ctx.lineTo(x2, y1);
+                ctx.lineTo(x2 - width/4, y2);
+                ctx.lineTo(x1, y2);
+                ctx.closePath();
+                ctx.stroke();
+                break;
+            case 'kite':
+                ctx.moveTo(x1 + width/2, y1);
+                ctx.lineTo(x2, y1 + height/2);
+                ctx.lineTo(x1 + width/2, y2);
+                ctx.lineTo(x1, y1 + height/2);
+                ctx.closePath();
+                ctx.stroke();
+                break;
+            case 'rhomboid':
+                ctx.moveTo(x1 + width/4, y1);
+                ctx.lineTo(x2, y1);
+                ctx.lineTo(x2 - width/4, y2);
+                ctx.lineTo(x1, y2);
+                ctx.closePath();
+                ctx.stroke();
+                break;
+            case 'star':
+                const spikes = 5;
+                const outerRadius = Math.min(Math.abs(width), Math.abs(height)) / 2;
+                const innerRadius = outerRadius / 2;
+                const starCenterX = x1 + width/2;
+                const starCenterY = y1 + height/2;
+                for (let i = 0; i < spikes * 2; i++) {
+                    const radius = i % 2 === 0 ? outerRadius : innerRadius;
+                    const angle = (i * Math.PI / spikes) - Math.PI/2;
+                    const x = starCenterX + radius * Math.cos(angle);
+                    const y = starCenterY + radius * Math.sin(angle);
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.stroke();
+                break;
+        }
+    }
+    function endDraw() {
         if (!drawing) return;
         drawing = false;
+        if (airbrushInterval) {
+            clearInterval(airbrushInterval);
+            airbrushInterval = null;
+        }
         if (tool === 'brush' || tool === 'eraser') {
             ctx.closePath();
         }
+        selection = null;
     }
     function clearCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -238,14 +732,34 @@
     function saveDrawing() {
         let data = canvas.toDataURL('image/png');
         let gallery = JSON.parse(localStorage.getItem('gallery') || '[]');
-        gallery.push({ img: data, date: new Date().toISOString() });
+        const drawingId = Date.now().toString();
+        gallery.push({ 
+            id: drawingId,
+            img: data, 
+            date: new Date().toISOString(),
+            editable: true
+        });
         localStorage.setItem('gallery', JSON.stringify(gallery));
         alert('Drawing saved to Gallery!');
     }
     function downloadDrawing() {
+        // Create a temporary canvas with white background
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        const tempCtx = tempCanvas.getContext('2d');
+        
+        // Fill with white background
+        tempCtx.fillStyle = '#ffffff';
+        tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+        
+        // Draw the original canvas content
+        tempCtx.drawImage(canvas, 0, 0);
+        
+        // Create download link
         let link = document.createElement('a');
-        link.download = 'drawing.jpg';
-        link.href = canvas.toDataURL('image/jpeg');
+        link.download = 'drawing.png';
+        link.href = tempCanvas.toDataURL('image/png');
         link.click();
     }
     function openDrawing() {
@@ -268,6 +782,40 @@
         };
         input.click();
     }
+    // Menu dropdown logic
+    function toggleMenuDropdown(event) {
+        event.stopPropagation();
+        var dropdown = document.getElementById('menuDropdown');
+        if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+            dropdown.style.display = 'block';
+            document.addEventListener('click', closeMenuDropdown);
+        } else {
+            dropdown.style.display = 'none';
+            document.removeEventListener('click', closeMenuDropdown);
+        }
+    }
+    function closeMenuDropdown(e) {
+        var dropdown = document.getElementById('menuDropdown');
+        if (!dropdown.contains(e.target)) {
+            dropdown.style.display = 'none';
+            document.removeEventListener('click', closeMenuDropdown);
+        }
+    }
+    // Helper function to convert hex color to RGB
+    function hexToRgb(hex) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
+    </script>
+    <script>
+        // Initialize canvas when the page loads
+        window.onload = function() {
+            initCanvas();
+        };
     </script>
 </body>
 </html> 

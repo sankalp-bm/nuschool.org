@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gallery - KidLearn AI</title>
+    <title>Science - KidLearn AI</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -15,10 +15,9 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            margin-bottom: 30px;
         }
         .header-bar {
-            background: #b57b79 !important;
+            background: #6fd0ff !important;
             border-bottom-left-radius: 0rem;
             border-bottom-right-radius: 0rem;
             height: 58px;
@@ -26,11 +25,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            position: fixed !important;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 200;
+            position: relative;
         }
         .header-bar .menu-btn {
             position: absolute;
@@ -50,7 +45,7 @@
             margin: 0 auto;
         }
         .footer-fixed {
-            background: #b57b79 !important;
+            background: #6fd0ff !important;
             border-radius: 0;
             box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
             position: fixed !important;
@@ -66,34 +61,36 @@
             align-items: center;
             color: #fff;
             font-weight: 700;
-            font-size: 12.65px;
+            font-size: 11px;
             margin: 0 0.2rem;
             text-decoration: none;
         }
+        .footer-btn.active { color: #fff; }
         .footer-btn .material-icons {
-            background: #b57b79;
-            color: #fff;
+            background: #fff;
+            color: #6fd0ff;
             border-radius: 50%;
-            padding: 1.15rem;
-            font-size: 1.1rem;
+            padding: 0.15rem;
+            font-size: 0.8rem;
             margin-bottom: 0.1rem;
         }
-        .footer-btn.active { color: #fff; }
         .footer-btn.active .material-icons {
-            background: #b57b79;
-            color: #fff;
+            background: #fff;
+            color: #003366;
         }
-        main {
-            flex: 1 0 auto;
-            padding-bottom: 90px;
-            margin-top: 68px;
+        main { flex: 1 0 auto; padding-bottom: 140px; }
+        .section-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 2rem 1rem 1.5rem 1rem; margin-bottom: 2rem; }
+        .category-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+        .category-btn2 { min-width: 0; min-height: 80px; height: 80px; width: 100%; display: flex; align-items: center; justify-content: center; border-radius: 1.5rem; font-size: 1.15rem; font-weight: 700; color: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.08); border: 3px solid rgba(255,255,255,0.7); transition: transform 0.15s; }
+        .category-btn2 .cat-icon { font-size: 1.5rem; margin-right: 0.5rem; }
+        .category-btn2:hover { transform: scale(1.04); }
+        .cat-physics { background: linear-gradient(135deg, #39b6ff 80%, #0093b8 100%); }
+        .cat-chemistry { background: linear-gradient(135deg, #e91e63 80%, #d72660 100%); }
+        .cat-biology { background: linear-gradient(135deg, #ffe066 80%, #ffd600 100%); color: #bfa600; }
+        .cat-earth { background: linear-gradient(135deg, #f8bbd0 80%, #e57399 100%); color: #ad1457; }
+        @media (max-width: 640px) {
+            .category-grid { grid-template-columns: 1fr 1fr; }
         }
-        .section-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 2rem 1rem 1.5rem 1rem; margin: 2rem auto; max-width: 700px; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem; }
-        .gallery-img { border-radius: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer; transition: transform 0.15s; background: #fff; }
-        .gallery-img:hover { transform: scale(1.05); }
-        .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 50; }
-        .modal-img { max-width: 90vw; max-height: 80vh; border-radius: 1.5rem; box-shadow: 0 4px 24px rgba(0,0,0,0.2); background: #fff; }
     </style>
 </head>
 <body>
@@ -101,7 +98,7 @@
         <button class="menu-btn" aria-label="Menu" onclick="toggleMenuDropdown(event)">
             <span class="material-icons">menu</span>
         </button>
-        <h1>Gallery</h1>
+        <h1>Science</h1>
         <div id="menuDropdown" style="display:none; position:absolute; left:1rem; top:58px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.12); border-radius:0.5rem; min-width:140px; z-index:200;">
             <a href="/contact.html" style="display:block; padding:0.75rem 1.25rem; color:#2196f3; text-decoration:none; font-weight:600; border-bottom:1px solid #eee;">Contact Us</a>
             <a href="/login.html" style="display:block; padding:0.75rem 1.25rem; color:#e53935; text-decoration:none; font-weight:600;">Logout</a>
@@ -109,10 +106,12 @@
     </header>
 
     <main>
-        <section class="section-card">
-            <h2 class="section-title" style="color:#003366;"><span class="section-icon material-icons">photo_library</span>Gallery</h2>
-            <div id="galleryGrid" class="gallery-grid"></div>
-        </section>
+        <div class="category-grid">
+            <a href="physics/" class="category-btn2 cat-physics"><span class="cat-icon material-icons">science</span>Physics</a>
+            <a href="chemistry/" class="category-btn2 cat-chemistry"><span class="cat-icon material-icons">biotech</span>Chemistry</a>
+            <a href="biology/" class="category-btn2 cat-biology"><span class="cat-icon material-icons">eco</span>Biology</a>
+            <a href="earth/" class="category-btn2 cat-earth"><span class="cat-icon material-icons">public</span>Earth</a>
+        </div>
     </main>
 
     <footer class="footer-fixed shadow flex justify-around items-center">
@@ -120,10 +119,6 @@
         <a href="/home.html" class="footer-btn active"><span class="material-icons">home</span>Home</a>
         <a href="/gallery.html" class="footer-btn"><span class="material-icons">photo_library</span>Gallery</a>
     </footer>
-
-    <div id="modalBg" class="modal-bg" style="display:none;" onclick="closeModal()">
-        <img id="modalImg" class="modal-img" src="" alt="Large Drawing" />
-    </div>
 
     <script>
     // Menu dropdown logic
@@ -145,39 +140,6 @@
             document.removeEventListener('click', closeMenuDropdown);
         }
     }
-    function renderGallery() {
-        const grid = document.getElementById('galleryGrid');
-        grid.innerHTML = '';
-        let gallery = JSON.parse(localStorage.getItem('gallery') || '[]');
-        gallery.reverse().forEach(item => {
-            const div = document.createElement('div');
-            div.style.display = 'flex';
-            div.style.flexDirection = 'column';
-            div.style.alignItems = 'center';
-            const img = document.createElement('img');
-            img.src = item.img;
-            img.className = 'gallery-img';
-            img.width = 120;
-            img.height = 120;
-            img.onclick = () => openModal(item.img);
-            const date = document.createElement('div');
-            date.style.fontSize = '0.8rem';
-            date.style.color = '#888';
-            date.style.marginTop = '0.25rem';
-            date.innerText = new Date(item.date).toLocaleString();
-            div.appendChild(img);
-            div.appendChild(date);
-            grid.appendChild(div);
-        });
-    }
-    function openModal(src) {
-        document.getElementById('modalImg').src = src;
-        document.getElementById('modalBg').style.display = 'flex';
-    }
-    function closeModal() {
-        document.getElementById('modalBg').style.display = 'none';
-    }
-    window.onload = renderGallery;
     </script>
 </body>
 </html> 

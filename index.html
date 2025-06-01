@@ -3,132 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Go Buddy Go - Login</title>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <title>KidLearn AI</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <!-- Google Platform Library -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <!-- Facebook SDK -->
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        .indicator-rect {
-            width: 28px;
-            height: 12px;
-            border-radius: 8px 8px 16px 16px;
-            background: #1e3353;
-            margin: 0 4px;
-            display: inline-block;
+        body {
+            background: linear-gradient(135deg, #F0FFFF 60%, #B6E2FF 100%);
+            font-family: 'Nunito', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
         }
-        body { font-family: 'Nunito', Arial, sans-serif; }
-        .header-footer-bg { background: #6fd0ff !important; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem; }
-        .footer-fixed { background: #fff !important; border-top-left-radius: 2rem; border-top-right-radius: 2rem; box-shadow: 0 -2px 12px rgba(0,0,0,0.08); position: static !important; bottom: 0; left: 0; right: 0; }
-        .footer-btn { display: flex; flex-direction: column; align-items: center; color: #6fd0ff; font-weight: 700; }
-        .footer-btn.active { color: #003366; }
-        .footer-btn .material-icons { background: #6fd0ff; color: #fff; border-radius: 50%; padding: 0.5rem; font-size: 2rem; margin-bottom: 0.25rem; }
-        .footer-btn.active .material-icons { background: #003366; }
+        .header-bar {
+            background: #b57b79 !important;
+            border-bottom-left-radius: 0rem;
+            border-bottom-right-radius: 0rem;
+            height: 58px;
+            min-height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+        }
+        .header-bar .menu-btn {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .header-bar h1 {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto;
+        }
+        .footer-fixed {
+            background: #b57b79 !important;
+            border-radius: 0;
+            box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+            position: fixed !important;
+            bottom: 0; left: 0; right: 0;
+            height: 58px;
+            min-height: 58px;
+            z-index: 100;
+            width: 100%;
+        }
+        .footer-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 12.65px;
+            margin: 0 0.2rem;
+            text-decoration: none;
+        }
+        .footer-btn .material-icons {
+            background: #b57b79;
+            color: #fff;
+            border-radius: 50%;
+            padding: 1.15rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.1rem;
+        }
+        .footer-btn.active { color: #fff; }
+        .footer-btn.active .material-icons {
+            background: #b57b79;
+            color: #fff;
+        }
+        main {
+            flex: 1 0 auto;
+            padding-bottom: 90px;
+            margin-top: 68px;
+        }
+        /* ... existing styles ... */
     </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex items-center justify-center">
-    <div x-data="buddyLogin()" class="w-full max-w-xs p-8 bg-white rounded-lg shadow-lg flex flex-col items-center">
-        <!-- Title -->
-        <h2 class="text-2xl font-bold text-blue-900 mb-6 text-center tracking-wide">GO BUDDY GO</h2>
-        <!-- Indicators -->
-        <div class="flex justify-center mb-10 w-full">
-            <template x-for="i in 5" :key="i">
-                <span class="indicator-rect"></span>
-            </template>
+<body>
+    <header class="header-bar" style="position: relative;">
+        <button class="menu-btn" aria-label="Menu" onclick="toggleMenuDropdown(event)">
+            <span class="material-icons">menu</span>
+        </button>
+        <h1>KidLearn AI</h1>
+        <div id="menuDropdown" style="display:none; position:absolute; left:1rem; top:58px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.12); border-radius:0.5rem; min-width:140px; z-index:200;">
+            <a href="/contact.html" style="display:block; padding:0.75rem 1.25rem; color:#2196f3; text-decoration:none; font-weight:600; border-bottom:1px solid #eee;">Contact Us</a>
+            <a href="/login.html" style="display:block; padding:0.75rem 1.25rem; color:#e53935; text-decoration:none; font-weight:600;">Logout</a>
         </div>
-        <!-- Subtitle -->
-        <div class="text-center text-black mb-8">Sign in Or Sign up</div>
-        <!-- Error Message -->
-        <template x-if="errorMessage">
-            <div class="mb-4 p-2 bg-red-100 text-red-700 rounded w-full text-center text-sm" x-text="errorMessage"></div>
-        </template>
-        <!-- Facebook Button -->
-        <button @click="loginFacebook" class="w-full mb-3 py-3 rounded bg-blue-400 text-white font-bold text-lg shadow flex items-center justify-center">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Facebook_Logo_%282019%29.png" alt="Facebook" class="w-6 h-6 mr-2"> Facebook
-        </button>
-        <!-- Gmail Button -->
-        <button id="googleSignInBtn" @click="loginGmail" class="w-full mb-3 py-3 rounded bg-red-200 text-white font-bold text-lg shadow flex items-center justify-center">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Google_icon_%282013-2015%29.png" alt="Google" class="w-6 h-6 mr-2"> Gmail
-        </button>
-        <!-- PIN Button or Input -->
-        <template x-if="!showPinInput">
-            <button @click="showPinInput = true" class="w-full mb-3 py-3 rounded bg-purple-300 text-white font-bold text-lg shadow">PIN</button>
-        </template>
-        <template x-if="showPinInput">
-            <input type="text" x-model="pin" maxlength="8" class="w-full mb-3 py-3 rounded bg-purple-100 text-purple-900 font-bold text-lg shadow text-center tracking-widest outline-none border-2 border-purple-300" placeholder="Enter PIN" @input="checkPin">
-        </template>
-    </div>
+    </header>
+
+    <main>
+        /* ... existing content ... */
+    </main>
+
+    <footer class="footer-fixed shadow flex justify-around items-center">
+        <a href="javascript:history.back()" class="footer-btn"><span class="material-icons">arrow_back</span>Back</a>
+        <a href="/home.html" class="footer-btn active"><span class="material-icons">home</span>Home</a>
+        <a href="/gallery.html" class="footer-btn"><span class="material-icons">photo_library</span>Gallery</a>
+    </footer>
+
     <script>
-    function buddyLogin() {
-        return {
-            showPinInput: false,
-            pin: '',
-            errorMessage: '',
-            // Facebook login
-            loginFacebook() {
-                // Initialize Facebook SDK if not already done
-                if (!window.FB) {
-                    this.errorMessage = 'Facebook SDK not loaded.';
-                    return;
-                }
-                FB.login((response) => {
-                    if (response.authResponse) {
-                        // You can get user info here if needed
-                        // FB.api('/me', function(response) { ... });
-                        // Simulate login: check if new user, etc.
-                        window.location.href = 'home.html';
-                    } else {
-                        this.errorMessage = 'Facebook login cancelled or failed.';
-                    }
-                }, {scope: 'public_profile,email'});
-            },
-            // Google login
-            loginGmail() {
-                // Google One Tap or button
-                // You must set up your Google Client ID and configure OAuth consent screen
-                // See: https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid
-                const client = google.accounts.oauth2.initTokenClient({
-                    client_id: 'YOUR_GOOGLE_CLIENT_ID', // <-- Replace with your Google Client ID
-                    scope: 'profile email',
-                    callback: (tokenResponse) => {
-                        if (tokenResponse && tokenResponse.access_token) {
-                            // Simulate login: check if new user, etc.
-                            window.location.href = 'home.html';
-                        } else {
-                            this.errorMessage = 'Google login failed.';
-                        }
-                    },
-                });
-                client.requestAccessToken();
-            },
-            // PIN login logic
-            checkPin() {
-                this.errorMessage = '';
-                if (this.pin.length === 8) {
-                    if (this.pin === '02012019') {
-                        // Simulate login and redirect
-                        window.location.href = 'home.html?demo=1';
-                    } else {
-                        this.errorMessage = 'Incorrect PIN. Please try again.';
-                        this.pin = '';
-                    }
-                }
-            }
+    // Menu dropdown logic
+    function toggleMenuDropdown(event) {
+        event.stopPropagation();
+        var dropdown = document.getElementById('menuDropdown');
+        if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+            dropdown.style.display = 'block';
+            document.addEventListener('click', closeMenuDropdown);
+        } else {
+            dropdown.style.display = 'none';
+            document.removeEventListener('click', closeMenuDropdown);
         }
     }
-    // Facebook SDK init
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : 'YOUR_FACEBOOK_APP_ID', // <-- Replace with your Facebook App ID
-            cookie     : true,
-            xfbml      : true,
-            version    : 'v19.0'
-        });
-    };
+    function closeMenuDropdown(e) {
+        var dropdown = document.getElementById('menuDropdown');
+        if (!dropdown.contains(e.target)) {
+            dropdown.style.display = 'none';
+            document.removeEventListener('click', closeMenuDropdown);
+        }
+    }
+    /* ... existing scripts ... */
     </script>
 </body>
 </html> 

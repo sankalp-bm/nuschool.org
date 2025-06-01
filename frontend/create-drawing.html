@@ -22,11 +22,30 @@
         .toolbar button.active, .toolbar button:hover { background: #39b6ff; }
         .drawing-board { background: #fff; border-radius: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,0.10); display: flex; justify-content: center; align-items: center; margin-bottom: 1rem; }
         canvas { border-radius: 1rem; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .footer-fixed { background: #fff !important; border-top-left-radius: 2rem; border-top-right-radius: 2rem; box-shadow: 0 -2px 12px rgba(0,0,0,0.08); position: static !important; bottom: 0; left: 0; right: 0; }
+        .footer-fixed {
+            background: #6fd0ff !important;
+            border-radius: 0;
+            box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+            position: fixed !important;
+            bottom: 0; left: 0; right: 0;
+            height: 48px;
+            min-height: 48px;
+            z-index: 100;
+        }
         .footer-btn { display: flex; flex-direction: column; align-items: center; color: #6fd0ff; font-weight: 700; }
         .footer-btn.active { color: #003366; }
-        .footer-btn .material-icons { background: #6fd0ff; color: #fff; border-radius: 50%; padding: 0.5rem; font-size: 2rem; margin-bottom: 0.25rem; }
-        .footer-btn.active .material-icons { background: #003366; }
+        .footer-btn .material-icons {
+            background: #fff;
+            color: #6fd0ff;
+            border-radius: 50%;
+            padding: 0.15rem;
+            font-size: 0.8rem;
+            margin-bottom: 0.1rem;
+        }
+        .footer-btn.active .material-icons {
+            background: #fff;
+            color: #003366;
+        }
         .tool-btn span.material-icons { transition: color 0.1s; }
         .tool-btn.active span.material-icons { color: #003366 !important; }
         .tool-btn[title]:hover:after, .tool-btn[title]:focus:after {
@@ -114,7 +133,7 @@
                 <label>Size <input type="range" id="sizePicker" min="2" max="32" value="4" onchange="setSize(this.value)"></label>
             </div>
             <div class="drawing-board">
-                <canvas id="drawingCanvas" width="360" height="640"></canvas>
+                <canvas id="drawingCanvas" width="668" height="400"></canvas>
             </div>
             <div class="toolbar" style="margin-top: 1rem; justify-content: center; border-top: 2px solid #e0e0e0; padding-top: 0.5rem;">
                 <button onclick="openDrawing()"><span class="material-icons">folder_open</span> Open</button>

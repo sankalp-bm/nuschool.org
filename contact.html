@@ -5,29 +5,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - KidLearn AI</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #F0FFFF; font-family: 'Nunito', Arial, sans-serif; }
-        .header-footer-bg { background: #6fd0ff !important; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem; }
+        body {
+            background: linear-gradient(135deg, #F0FFFF 60%, #B6E2FF 100%);
+            font-family: 'Nunito', Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 30px;
+        }
+        .header-bar {
+            background: #b57b79 !important;
+            border-bottom-left-radius: 0rem;
+            border-bottom-right-radius: 0rem;
+            height: 58px;
+            min-height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+        }
+        .header-bar .menu-btn {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .header-bar h1 {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto;
+        }
+        .footer-fixed {
+            background: #b57b79 !important;
+            border-radius: 0;
+            box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+            position: fixed !important;
+            bottom: 0; left: 0; right: 0;
+            height: 58px;
+            min-height: 58px;
+            z-index: 100;
+            width: 100%;
+        }
+        .footer-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 12.65px;
+            margin: 0 0.2rem;
+            text-decoration: none;
+        }
+        .footer-btn .material-icons {
+            background: #b57b79;
+            color: #fff;
+            border-radius: 50%;
+            padding: 1.15rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.1rem;
+        }
+        .footer-btn.active { color: #fff; }
+        .footer-btn.active .material-icons {
+            background: #b57b79;
+            color: #fff;
+        }
+        main {
+            flex: 1 0 auto;
+            padding-bottom: 90px;
+            margin-top: 68px;
+        }
         .section-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 2rem 1rem 1.5rem 1rem; margin: 2rem auto; max-width: 480px; }
         .section-title { font-size: 1.5rem !important; font-weight: 800; display: flex; align-items: center; margin-bottom: 1.5rem; color: #39b6ff; }
         .section-title .section-icon { font-size: 2rem !important; margin-right: 0.75rem; }
         .contact-link { color: #39b6ff; font-weight: 700; text-decoration: underline; }
-        .footer-fixed { background: #fff !important; border-top-left-radius: 2rem; border-top-right-radius: 2rem; box-shadow: 0 -2px 12px rgba(0,0,0,0.08); position: static !important; bottom: 0; left: 0; right: 0; }
-        .footer-btn { display: flex; flex-direction: column; align-items: center; color: #6fd0ff; font-weight: 700; }
-        .footer-btn.active { color: #003366; }
-        .footer-btn .material-icons { background: #6fd0ff; color: #fff; border-radius: 50%; padding: 0.5rem; font-size: 2rem; margin-bottom: 0.25rem; }
-        .footer-btn.active .material-icons { background: #003366; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
-    <header class="header-footer-bg text-white p-4 flex items-center justify-center relative">
-        <a href="home.html" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white"><span class="material-icons" style="font-size: 2rem;">arrow_back</span></a>
-        <h1 class="text-2xl font-bold flex-1 text-center">Contact Us</h1>
+<body>
+    <header class="header-bar" style="position: relative;">
+        <button class="menu-btn" aria-label="Menu" onclick="toggleMenuDropdown(event)">
+            <span class="material-icons">menu</span>
+        </button>
+        <h1>Contact Us</h1>
+        <div id="menuDropdown" style="display:none; position:absolute; left:1rem; top:58px; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.12); border-radius:0.5rem; min-width:140px; z-index:200;">
+            <a href="/contact.html" style="display:block; padding:0.75rem 1.25rem; color:#2196f3; text-decoration:none; font-weight:600; border-bottom:1px solid #eee;">Contact Us</a>
+            <a href="/login.html" style="display:block; padding:0.75rem 1.25rem; color:#e53935; text-decoration:none; font-weight:600;">Logout</a>
+        </div>
     </header>
-    <main class="flex-1 overflow-y-auto p-2 md:p-6">
+
+    <main>
         <section class="section-card">
             <h2 class="section-title"><span class="section-icon material-icons">contact_mail</span>Contact Us</h2>
             <p class="mb-4">This app was thoughtfully designed and created by Sankalp G Sharma.</p>
@@ -38,10 +117,33 @@
             </div>
         </section>
     </main>
-    <footer class="footer-fixed shadow p-2 flex justify-around items-center">
-        <a href="home.html" class="footer-btn"><span class="material-icons">arrow_back</span>Back</a>
-        <a href="home.html" class="footer-btn active"><span class="material-icons">home</span>Home</a>
-        <button class="footer-btn"><span class="material-icons">photo_library</span>Gallery</button>
+
+    <footer class="footer-fixed shadow flex justify-around items-center">
+        <a href="javascript:history.back()" class="footer-btn"><span class="material-icons">arrow_back</span>Back</a>
+        <a href="/home.html" class="footer-btn active"><span class="material-icons">home</span>Home</a>
+        <a href="/gallery.html" class="footer-btn"><span class="material-icons">photo_library</span>Gallery</a>
     </footer>
+
+    <script>
+    // Menu dropdown logic
+    function toggleMenuDropdown(event) {
+        event.stopPropagation();
+        var dropdown = document.getElementById('menuDropdown');
+        if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+            dropdown.style.display = 'block';
+            document.addEventListener('click', closeMenuDropdown);
+        } else {
+            dropdown.style.display = 'none';
+            document.removeEventListener('click', closeMenuDropdown);
+        }
+    }
+    function closeMenuDropdown(e) {
+        var dropdown = document.getElementById('menuDropdown');
+        if (!dropdown.contains(e.target)) {
+            dropdown.style.display = 'none';
+            document.removeEventListener('click', closeMenuDropdown);
+        }
+    }
+    </script>
 </body>
 </html> 

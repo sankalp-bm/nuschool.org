@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #F0FFFF; font-family: 'Nunito', Arial, sans-serif; }
+        body { background-color: #F0FFFF; font-family: 'Nunito', Arial, sans-serif; margin-bottom: 30px; }
         .header-footer-bg { background: #6fd0ff !important; border-bottom-left-radius: 2rem; border-bottom-right-radius: 2rem; }
         .section-card { background: #fff; border-radius: 2rem; box-shadow: 0 4px 24px rgba(0,0,0,0.08); padding: 2rem 1rem 1.5rem 1rem; margin-bottom: 2rem; }
         .section-title { font-size: 1.5rem !important; font-weight: 800; display: flex; align-items: center; margin-bottom: 1.5rem; color: #39b6ff; }
@@ -23,20 +23,85 @@
         .cat-multiplication { background: linear-gradient(135deg, #ffa726 80%, #ff9800 100%); }
         .cat-division { background: linear-gradient(135deg, #7c4dff 80%, #512da8 100%); }
         .cat-puzzle { background: linear-gradient(135deg, #ffa726 80%, #ff9800 100%); }
-        .footer-fixed { background: #fff !important; border-top-left-radius: 2rem; border-top-right-radius: 2rem; box-shadow: 0 -2px 12px rgba(0,0,0,0.08); position: static !important; bottom: 0; left: 0; right: 0; }
-        .footer-btn { display: flex; flex-direction: column; align-items: center; color: #6fd0ff; font-weight: 700; }
-        .footer-btn.active { color: #003366; }
-        .footer-btn .material-icons { background: #6fd0ff; color: #fff; border-radius: 50%; padding: 0.5rem; font-size: 2rem; margin-bottom: 0.25rem; }
-        .footer-btn.active .material-icons { background: #003366; }
+        .header-bar {
+            background: #b57b79 !important;
+            border-bottom-left-radius: 0rem;
+            border-bottom-right-radius: 0rem;
+            height: 58px;
+            min-height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+        }
+        .header-bar .menu-btn {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .header-bar h1 {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto;
+        }
+        .footer-fixed {
+            background: #b57b79 !important;
+            border-radius: 0;
+            box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+            position: fixed !important;
+            bottom: 0; left: 0; right: 0;
+            height: 58px;
+            min-height: 58px;
+            z-index: 100;
+            width: 100%;
+        }
+        .footer-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 12.65px;
+            margin: 0 0.2rem;
+            text-decoration: none;
+        }
+        .footer-btn .material-icons {
+            background: #b57b79;
+            color: #fff;
+            border-radius: 50%;
+            padding: 1.15rem;
+            font-size: 1.1rem;
+            margin-bottom: 0.1rem;
+        }
+        .footer-btn.active { color: #fff; }
+        .footer-btn.active .material-icons {
+            background: #b57b79;
+            color: #fff;
+        }
+        main {
+            flex: 1 0 auto;
+            padding-bottom: 90px;
+            margin-top: 68px;
+        }
         @media (max-width: 640px) { .category-grid { grid-template-columns: 1fr 1fr; } }
-        main { flex: 1 0 auto; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
     <!-- Header -->
-    <header class="header-footer-bg text-white p-4 flex items-center justify-center relative">
-        <a href="home.html" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white"><span class="material-icons" style="font-size: 2rem;">arrow_back</span></a>
-        <h1 class="text-2xl font-bold flex-1 text-center">Maths</h1>
+    <header class="header-bar">
+        <a href="home.html" class="menu-btn"><span class="material-icons">menu</span></a>
+        <h1>Maths</h1>
     </header>
     <main class="flex-1 overflow-y-auto p-2 md:p-6">
         <section class="section-card">

@@ -2,4 +2,64 @@
 <html lang="en">
 <head><meta charset="UTF-8"><title>3D Shapes</title></head>
 <body><h1>3D Shapes</h1><p>This is the 3D Shapes page. Content coming soon.</p></body>
-</html> 
+</html>
+
+<style>
+    .header-bar {
+        background: #b57b79 !important;
+        border-bottom-left-radius: 0rem;
+        border-bottom-right-radius: 0rem;
+        height: 58px;
+        min-height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+    }
+    .footer-fixed {
+        background: #b57b79 !important;
+        border-radius: 0;
+        box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+        position: fixed !important;
+        bottom: 0; left: 0; right: 0;
+        height: 58px;
+        min-height: 58px;
+        z-index: 100;
+        width: 100%;
+    }
+    .footer-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #fff;
+        font-weight: 700;
+        font-size: 12.65px;
+        margin: 0 0.2rem;
+        text-decoration: none;
+    }
+    .footer-btn .material-icons {
+        background: #b57b79;
+        color: #fff;
+        border-radius: 50%;
+        padding: 1.15rem;
+        font-size: 1.1rem;
+        margin-bottom: 0.1rem;
+    }
+    .footer-btn.active { color: #fff; }
+    .footer-btn.active .material-icons {
+        background: #b57b79;
+        color: #fff;
+    }
+    main {
+        flex: 1 0 auto;
+        padding-bottom: 90px;
+        margin-top: 68px;
+    }
+    body {
+        margin-bottom: 30px;
+    }
+</style> 
