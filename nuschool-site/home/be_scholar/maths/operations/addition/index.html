@@ -91,24 +91,24 @@ function logoutAndRedirect(event) {
    <button class="level-btn" :disabled="level === 1" @click="changeLevel(-1)">-</button>
    <div class="level-label" x-text="'Level ' + level"></div>
    <button class="level-btn" :disabled="level === 17" @click="changeLevel(1)">+</button>
- </div>
+    </div>
     <!-- Math Problem Block -->
-  <div class="math-block" style="margin-bottom: 1rem;">
-      <div id="mathGrid" class="math-grid" style="display: flex; flex-direction: column; align-items: flex-end; font-size: 36px; font-family: monospace;"></div>
-      <div class="math-divider" :style="'border-bottom: 2px solid #F7CAC9; width: ' + (cellCount * 3.5) + 'rem; margin: 0.5rem 0;'"></div>
-  </div>
-  <!-- Answer Cells -->
+    <div class="math-block" style="margin-bottom: 1rem;">
+        <div id="mathGrid" class="math-grid" style="display: flex; flex-direction: column; align-items: flex-end; font-size: 36px; font-family: monospace;"></div>
+        <div class="math-divider" :style="'border-bottom: 2px solid #F7CAC9; width: ' + (cellCount * 3.5) + 'rem; margin: 0.5rem 0;'"></div>
+    </div>
+    <!-- Answer Cells -->
   <div class="answer-cells-container" :style="'display: flex; justify-content: flex-end; gap: 0.2rem; margin-bottom: 1rem; width: calc(' + cellCount + ' * 3rem + (' + (cellCount - 1) + ') * 0.2rem);'">
-      <template x-for="(cell, idx) in answerCells" :key="idx">
-          <input type="text" maxlength="1" class="math-cell answer-cell" :value="cell" readonly
-              @click="activeCell = idx"
+        <template x-for="(cell, idx) in answerCells" :key="idx">
+            <input type="text" maxlength="1" class="math-cell answer-cell" :value="cell" readonly
+                @click="activeCell = idx"
               style="width: 3rem; height: 3rem; text-align: center; font-size: 36px; border: 2px solid #b57b79; border-radius: 0.5rem;" />
-      </template>
-  </div>
-  <!-- Keypad and Buttons -->
-  <div class="cheerful-box bg-white rounded-lg shadow-lg p-6 w-full max-w-md mt-2" style="background: none; box-shadow: none;">
-      <div class="mt-6 flex flex-col items-center">
-          <div class="keypad-grid" style="display: grid; grid-template-columns: repeat(4, 3.5rem); gap: 0.5rem;">
+        </template>
+    </div>
+    <!-- Keypad and Buttons -->
+    <div class="cheerful-box bg-white rounded-lg shadow-lg p-6 w-full max-w-md mt-2" style="background: none; box-shadow: none;">
+        <div class="mt-6 flex flex-col items-center">
+            <div class="keypad-grid" style="display: grid; grid-template-columns: repeat(4, 3.5rem); gap: 0.5rem;">
               <button class="keypad-btn" @click="pressKey('7')">7</button>
               <button class="keypad-btn" @click="pressKey('8')">8</button>
               <button class="keypad-btn" @click="pressKey('9')">9</button>
@@ -140,67 +140,67 @@ function logoutAndRedirect(event) {
                   <span class="icon">&#10003;</span>
                   <span style="font-size:12px;">Submit</span>
               </button>
-          </div>
-      </div>
-  </div>
-  <!-- Feedback Popup -->
-  <template x-if="showFeedback">
-      <div style="position:fixed; top:40%; left:50%; transform:translate(-50%,-50%); background:#fff; border:3px solid #b57b79; border-radius:1rem; padding:2rem 3rem; font-size:36px; font-weight:bold; z-index:1000; box-shadow:0 4px 24px #0002;">
-          <span x-text="feedback"></span>
-      </div>
-  </template>
-  <!-- Rules Popup -->
-  <template x-if="showRulesPopup">
-      <div class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center" style="font-size:36px;">
-              <div class="text-xl font-bold mb-4">Rules of Addition</div>
-              <div class="mb-4 text-left">
-                  <ul class="list-disc ml-6 text-sm text-gray-700">
-                      <li>Add numbers from right (ONES) to left (TENS, HUNDREDS, ...).</li>
-                      <li>If the sum is 10 or more, carry over to the next column.</li>
-                      <li>Line up the digits by place value.</li>
-                      <li>Check your answer before submitting!</li>
-                  </ul>
-              </div>
-              <button @click="showRulesPopup=false" class="cheerful-btn" style="font-size:36px;">Close</button>
-          </div>
-      </div>
-  </template>
-  <!-- Hint Popup -->
-  <template x-if="showHintPopup">
-      <div class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center" style="font-size:36px;">
-              <div class="text-xl font-bold mb-4">Hint</div>
-              <div class="mb-4 text-left text-sm text-gray-700">
-                  Try adding the rightmost digits first. If the sum is 10 or more, write the ONES digit and carry the TENS to the next column!
-              </div>
-              <button @click="showHintPopup=false" class="cheerful-btn" style="font-size:36px;">Close</button>
-          </div>
-      </div>
-  </template>
+            </div>
+        </div>
+    </div>
+    <!-- Feedback Popup -->
+    <template x-if="showFeedback">
+        <div style="position:fixed; top:40%; left:50%; transform:translate(-50%,-50%); background:#fff; border:3px solid #b57b79; border-radius:1rem; padding:2rem 3rem; font-size:36px; font-weight:bold; z-index:1000; box-shadow:0 4px 24px #0002;">
+            <span x-text="feedback"></span>
+        </div>
+    </template>
+    <!-- Rules Popup -->
+    <template x-if="showRulesPopup">
+        <div class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center" style="font-size:36px;">
+                <div class="text-xl font-bold mb-4">Rules of Addition</div>
+                <div class="mb-4 text-left">
+                    <ul class="list-disc ml-6 text-sm text-gray-700">
+                        <li>Add numbers from right (ONES) to left (TENS, HUNDREDS, ...).</li>
+                        <li>If the sum is 10 or more, carry over to the next column.</li>
+                        <li>Line up the digits by place value.</li>
+                        <li>Check your answer before submitting!</li>
+                    </ul>
+                </div>
+                <button @click="showRulesPopup=false" class="cheerful-btn" style="font-size:36px;">Close</button>
+            </div>
+        </div>
+    </template>
+    <!-- Hint Popup -->
+    <template x-if="showHintPopup">
+        <div class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+            <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center" style="font-size:36px;">
+                <div class="text-xl font-bold mb-4">Hint</div>
+                <div class="mb-4 text-left text-sm text-gray-700">
+                    Try adding the rightmost digits first. If the sum is 10 or more, write the ONES digit and carry the TENS to the next column!
+                </div>
+                <button @click="showHintPopup=false" class="cheerful-btn" style="font-size:36px;">Close</button>
+            </div>
+        </div>
+    </template>
 </main>
 <!-- Alpine.js for reactivity -->
 <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 <script>
 function additionExercise() {
-  return {
-      firstNumber: 0,
-      secondNumber: 0,
-      answerCells: [],
-      activeCell: 0,
-      feedback: '',
-      showFeedback: false,
+    return {
+        firstNumber: 0,
+        secondNumber: 0,
+        answerCells: [],
+        activeCell: 0,
+        feedback: '',
+        showFeedback: false,
       level: 1,
-      showRulesPopup: false,
-      showHintPopup: false,
-      cellCount: 3,
-      changeLevel(delta) {
+        showRulesPopup: false,
+        showHintPopup: false,
+        cellCount: 3,
+        changeLevel(delta) {
           const maxLevel = 17;
-          const minLevel = 1;
-          this.level = Math.max(minLevel, Math.min(maxLevel, this.level + delta));
-          this.generateProblem();
-      },
-      generateProblem() {
+            const minLevel = 1;
+            this.level = Math.max(minLevel, Math.min(maxLevel, this.level + delta));
+            this.generateProblem();
+        },
+        generateProblem() {
           let firstDigits, secondDigits;
          
           switch(this.level) {
@@ -294,111 +294,111 @@ function additionExercise() {
           this.firstNumber = Math.floor(Math.random() * (Math.pow(10, firstDigits) - Math.pow(10, firstDigits - 1))) + Math.pow(10, firstDigits - 1);
           this.secondNumber = Math.floor(Math.random() * (Math.pow(10, secondDigits) - Math.pow(10, secondDigits - 1))) + Math.pow(10, secondDigits - 1);
          
-          const maxDigits = Math.max(this.firstNumber.toString().length, this.secondNumber.toString().length);
-          this.cellCount = maxDigits + 1;
-          this.answerCells = Array(this.cellCount).fill('');
-          this.activeCell = this.cellCount - 1;
-          this.feedback = '';
-          this.showFeedback = false;
-          this.renderGrid();
-      },
-      renderGrid() {
-          const grid = document.getElementById('mathGrid');
-          if (!grid) return;
-          const maxDigits = this.cellCount;
-          // Prepare digit arrays, right-aligned
-          const fStr = this.firstNumber.toString().padStart(maxDigits, ' ');
-          const sStr = this.secondNumber.toString().padStart(maxDigits, ' ');
-          grid.innerHTML = '';
-          // First addend row
-          const row1 = document.createElement('div');
-          row1.style.display = 'flex';
-          for (let i = 0; i < maxDigits; i++) {
-              const cell = document.createElement('div');
-              cell.className = 'math-cell';
-              cell.style.width = '3rem';
-              cell.style.height = '3rem';
+            const maxDigits = Math.max(this.firstNumber.toString().length, this.secondNumber.toString().length);
+            this.cellCount = maxDigits + 1;
+            this.answerCells = Array(this.cellCount).fill('');
+            this.activeCell = this.cellCount - 1;
+            this.feedback = '';
+            this.showFeedback = false;
+            this.renderGrid();
+        },
+        renderGrid() {
+            const grid = document.getElementById('mathGrid');
+            if (!grid) return;
+            const maxDigits = this.cellCount;
+            // Prepare digit arrays, right-aligned
+            const fStr = this.firstNumber.toString().padStart(maxDigits, ' ');
+            const sStr = this.secondNumber.toString().padStart(maxDigits, ' ');
+            grid.innerHTML = '';
+            // First addend row
+            const row1 = document.createElement('div');
+            row1.style.display = 'flex';
+            for (let i = 0; i < maxDigits; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'math-cell';
+                cell.style.width = '3rem';
+                cell.style.height = '3rem';
               cell.style.border = (i === 0) ? 'none' : '2px solid #b57b79';
-              cell.style.borderRadius = '0.5rem';
-              cell.style.display = 'flex';
-              cell.style.alignItems = 'center';
-              cell.style.justifyContent = 'center';
-              cell.style.fontSize = '36px';
+                cell.style.borderRadius = '0.5rem';
+                cell.style.display = 'flex';
+                cell.style.alignItems = 'center';
+                cell.style.justifyContent = 'center';
+                cell.style.fontSize = '36px';
               cell.style.marginRight = (i < maxDigits - 1) ? '0.2rem' : '0';
-              cell.textContent = fStr[i] !== ' ' ? fStr[i] : '';
-              row1.appendChild(cell);
-          }
-          grid.appendChild(row1);
-          // Second addend row (with + sign at the start)
-          const row2 = document.createElement('div');
-          row2.style.display = 'flex';
-          for (let i = 0; i < maxDigits; i++) {
-              const cell = document.createElement('div');
-              cell.className = 'math-cell';
-              cell.style.width = '3rem';
-              cell.style.height = '3rem';
+                cell.textContent = fStr[i] !== ' ' ? fStr[i] : '';
+                row1.appendChild(cell);
+            }
+            grid.appendChild(row1);
+            // Second addend row (with + sign at the start)
+            const row2 = document.createElement('div');
+            row2.style.display = 'flex';
+            for (let i = 0; i < maxDigits; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'math-cell';
+                cell.style.width = '3rem';
+                cell.style.height = '3rem';
               if (i === 0) {
                   cell.textContent = '+';
                   cell.style.color = '#b57b79';
                   cell.style.border = 'none';
               } else {
                   cell.textContent = sStr[i] !== ' ' ? sStr[i] : '';
-                  cell.style.border = '2px solid #b57b79';
+                cell.style.border = '2px solid #b57b79';
               }
-              cell.style.borderRadius = '0.5rem';
-              cell.style.display = 'flex';
-              cell.style.alignItems = 'center';
-              cell.style.justifyContent = 'center';
-              cell.style.fontSize = '36px';
+                cell.style.borderRadius = '0.5rem';
+                cell.style.display = 'flex';
+                cell.style.alignItems = 'center';
+                cell.style.justifyContent = 'center';
+                cell.style.fontSize = '36px';
               cell.style.marginRight = (i < maxDigits - 1) ? '0.2rem' : '0';
-              row2.appendChild(cell);
-          }
-          grid.appendChild(row2);
+                row2.appendChild(cell);
+            }
+            grid.appendChild(row2);
           // Set answer row width to match grid
           const answerRowDiv = document.querySelector('.answer-cells-container');
           if (answerRowDiv) {
               answerRowDiv.style.width = `calc(${maxDigits} * 3rem + ${maxDigits - 1} * 0.2rem)`;
           }
-      },
-      pressKey(key) {
-          if (this.activeCell === null) return;
-          if (key === '.' && this.answerCells.includes('.')) return;
-          this.answerCells[this.activeCell] = key;
-          if (this.activeCell > 0) {
-              this.activeCell--;
-          }
-      },
-      undoInput() {
-          if (this.activeCell < this.answerCells.length - 1) {
-              this.activeCell++;
-              this.answerCells[this.activeCell] = '';
-          }
-      },
-      checkAnswer() {
-          const userAnswer = this.answerCells.join('').replace(/\s/g, '');
-          const correct = (this.firstNumber + this.secondNumber).toString().padStart(this.answerCells.length, ' ');
-          if (userAnswer === correct.replace(/\s/g, '')) {
-              this.feedback = '✅ Correct!';
-              this.showFeedback = true;
-              setTimeout(() => {
-                  this.showFeedback = false;
-                  this.generateProblem();
-              }, 2000);
-          } else {
-              this.feedback = '❌ Try again!';
-              this.showFeedback = true;
-              setTimeout(() => {
-                  this.showFeedback = false;
-              }, 2000);
-          }
-      },
-      showHint() {
-          this.showHintPopup = true;
-      },
-      showRules() {
-          this.showRulesPopup = true;
-      }
-  }
+        },
+        pressKey(key) {
+            if (this.activeCell === null) return;
+            if (key === '.' && this.answerCells.includes('.')) return;
+            this.answerCells[this.activeCell] = key;
+            if (this.activeCell > 0) {
+                this.activeCell--;
+            }
+        },
+        undoInput() {
+            if (this.activeCell < this.answerCells.length - 1) {
+                this.activeCell++;
+                this.answerCells[this.activeCell] = '';
+            }
+        },
+        checkAnswer() {
+            const userAnswer = this.answerCells.join('').replace(/\s/g, '');
+            const correct = (this.firstNumber + this.secondNumber).toString().padStart(this.answerCells.length, ' ');
+            if (userAnswer === correct.replace(/\s/g, '')) {
+                this.feedback = '✅ Correct!';
+                this.showFeedback = true;
+                setTimeout(() => {
+                    this.showFeedback = false;
+                    this.generateProblem();
+                }, 2000);
+            } else {
+                this.feedback = '❌ Try again!';
+                this.showFeedback = true;
+                setTimeout(() => {
+                    this.showFeedback = false;
+                }, 2000);
+            }
+        },
+        showHint() {
+            this.showHintPopup = true;
+        },
+        showRules() {
+            this.showRulesPopup = true;
+        }
+    }
 }
 </script>
 
