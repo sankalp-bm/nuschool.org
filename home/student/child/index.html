@@ -1,0 +1,164 @@
+---
+layout: default
+title: Home
+---
+
+<!-- SVG cloud clip-paths for subject buttons -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <clipPath id="cloud-shape-curve" clipPathUnits="objectBoundingBox">
+      <path d="M0.1,0.6 Q0.05,0.45 0.15,0.3 Q0.2,0.1 0.4,0.15 Q0.5,0.05 0.6,0.15 Q0.8,0.1 0.85,0.3 Q0.95,0.45 0.9,0.6 Q0.8,0.85 0.5,0.9 Q0.2,0.85 0.1,0.6 Z" />
+    </clipPath>
+    <clipPath id="cloud-shape-1" clipPathUnits="objectBoundingBox">
+      <path d="M0.18,0.65 Q0.05,0.55 0.13,0.38 Q0.18,0.18 0.38,0.18 Q0.45,0.05 0.62,0.13 Q0.7,0.05 0.8,0.18 Q0.95,0.18 0.95,0.38 Q1,0.55 0.85,0.65 Z" />
+    </clipPath>
+    <clipPath id="cloud-shape-2" clipPathUnits="objectBoundingBox">
+      <path d="M0.2,0.7 Q0.1,0.5 0.2,0.35 Q0.25,0.15 0.45,0.2 Q0.5,0.05 0.7,0.15 Q0.8,0.05 0.85,0.2 Q1,0.3 0.95,0.5 Q1,0.7 0.8,0.7 Z" />
+    </clipPath>
+    <clipPath id="cloud-shape-3" clipPathUnits="objectBoundingBox">
+      <path d="M0.15,0.6 Q0.05,0.45 0.15,0.3 Q0.2,0.1 0.4,0.15 Q0.5,0.05 0.6,0.15 Q0.8,0.1 0.85,0.3 Q0.95,0.45 0.85,0.6 Z" />
+    </clipPath>
+    <clipPath id="cloud-shape-4" clipPathUnits="objectBoundingBox">
+      <path d="M0.18,0.65 Q0.05,0.55 0.13,0.38 Q0.18,0.18 0.38,0.18 Q0.45,0.05 0.62,0.13 Q0.7,0.05 0.8,0.18 Q0.95,0.18 0.95,0.38 Q1,0.55 0.85,0.65 Z" />
+    </clipPath>
+    <clipPath id="cloud-shape-5" clipPathUnits="objectBoundingBox">
+      <path d="M0.2,0.7 Q0.1,0.5 0.2,0.35 Q0.25,0.15 0.45,0.2 Q0.5,0.05 0.7,0.15 Q0.8,0.05 0.85,0.2 Q1,0.3 0.95,0.5 Q1,0.7 0.8,0.7 Z" />
+    </clipPath>
+    <clipPath id="cloud-shape-6" clipPathUnits="objectBoundingBox">
+      <path d="M0.15,0.6 Q0.05,0.45 0.15,0.3 Q0.2,0.1 0.4,0.15 Q0.5,0.05 0.6,0.15 Q0.8,0.1 0.85,0.3 Q0.95,0.45 0.85,0.6 Z" />
+    </clipPath>
+    <clipPath id="cloud-shape-7" clipPathUnits="objectBoundingBox">
+      <ellipse cx="0.5" cy="0.5" rx="0.5" ry="0.35" />
+    </clipPath>
+    <clipPath id="cloud-shape-8" clipPathUnits="objectBoundingBox">
+      <ellipse cx="0.5" cy="0.5" rx="0.45" ry="0.4" />
+    </clipPath>
+    <clipPath id="cloud-shape-9" clipPathUnits="objectBoundingBox">
+      <ellipse cx="0.5" cy="0.5" rx="0.48" ry="0.32" />
+    </clipPath>
+  </defs>
+</svg>
+
+<div class="slider-container" aria-label="Homepage Slider">
+  <div class="slider-slides-wrapper" id="sliderWrapper">
+    <!-- Image Slide 1 -->
+    <a href="https://www.google.com" class="slider-slide" target="_blank" rel="noopener">
+      <img src="/assets/slider/orangeslide.png" alt="Welcome Orange" style="max-height:100%; max-width:100%;">
+      <span style="position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:2rem;color:#fff;font-weight:bold;text-shadow:0 2px 8px #000;">Welcome</span>
+    </a>
+    <!-- Image Slide 2 -->
+    <a href="https://www.google.com" class="slider-slide" target="_blank" rel="noopener">
+      <img src="/assets/slider/pinkslide.png" alt="Welcome Pink" style="max-height:100%; max-width:100%;">
+      <span style="position:absolute;left:0;right:0;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:2rem;color:#fff;font-weight:bold;text-shadow:0 2px 8px #000;">Welcome</span>
+    </a>
+    <!-- Text Slide 3 -->
+    <a href="https://www.google.com" class="slider-slide" target="_blank" rel="noopener">
+      <span>slide3</span>
+    </a>
+    <!-- Text Slide 4 -->
+    <a href="https://www.google.com" class="slider-slide" target="_blank" rel="noopener">
+      <span>slide4</span>
+    </a>
+    <!-- Text Slide 5 -->
+    <a href="https://www.google.com" class="slider-slide" target="_blank" rel="noopener">
+      <span>slide5</span>
+    </a>
+  </div>
+  <div class="slider-nav" id="sliderNav" aria-label="Slider Navigation">
+    <div class="slider-bullet active" data-slide="0" aria-label="Go to slide 1"></div>
+    <div class="slider-bullet" data-slide="1" aria-label="Go to slide 2"></div>
+    <div class="slider-bullet" data-slide="2" aria-label="Go to slide 3"></div>
+    <div class="slider-bullet" data-slide="3" aria-label="Go to slide 4"></div>
+    <div class="slider-bullet" data-slide="4" aria-label="Go to slide 5"></div>
+  </div>
+</div>
+
+<div class="main-content-wrapper" id="content-container">
+    <!-- Content will be dynamically populated here by JavaScript -->
+    <p class="text-center text-gray-500 py-8" id="loading-message">Loading content...</p>
+</div>
+
+<script>
+    // Sample data simulating backend response
+    const sampleData = [
+        {
+            sectionId: 'section-1',
+            theme: 1,
+            title: 'Be Scholar',
+            subjects: [
+                { id: 'math', name: 'Maths', url: '/maths' },
+                { id: 'science', name: 'Science', url: '/science' },
+                { id: 'language', name: 'Language', url: '/language' },
+                { id: 'computer', name: 'Computer', url: '/computer' }
+            ]
+        },
+        {
+            sectionId: 'section-2',
+            theme: 2,
+            title: 'Be Social',
+            subjects: [
+                { id: 'family', name: 'Family', url: '/family' },
+                { id: 'friends', name: 'Friends', url: '/friends' },
+                { id: 'school', name: 'School', url: '/school' },
+                { id: 'community', name: 'Community', url: '/community' },
+                { id: 'sports', name: 'Sports', url: '/sports' }
+            ]
+        }
+    ];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const contentContainer = document.getElementById('content-container');
+        const loadingMessage = document.getElementById('loading-message');
+        const cloudShapes = [
+            'cloud-shape-1','cloud-shape-2','cloud-shape-3','cloud-shape-4','cloud-shape-5','cloud-shape-6','cloud-shape-7','cloud-shape-8','cloud-shape-9'
+        ];
+
+        // Simulate fetching data from a backend
+        setTimeout(() => {
+            loadingMessage.style.display = 'none'; // Hide loading message
+
+            if (sampleData.length === 0) {
+                contentContainer.innerHTML = '<p class="text-center text-gray-500 py-8">No content sections available.</p>';
+                return;
+            }
+
+            sampleData.forEach((section, sectionIdx) => {
+                // Create section container
+                const sectionDiv = document.createElement('div');
+                sectionDiv.classList.add('sections-subject-section-container', `section-theme-${section.theme}`);
+                sectionDiv.setAttribute('data-section-id', section.sectionId);
+
+                // Create section title
+                const titleDiv = document.createElement('div');
+                titleDiv.classList.add('sections-subject-section-title', `section-theme-${section.theme}`);
+                titleDiv.textContent = section.title;
+                sectionDiv.appendChild(titleDiv);
+
+                // Create subjects grid
+                const gridDiv = document.createElement('div');
+                gridDiv.classList.add('sections-subject-grid');
+
+                if (section.subjects && section.subjects.length > 0) {
+                    section.subjects.forEach((subject, idx) => {
+                        const subjectLink = document.createElement('a');
+                        subjectLink.href = subject.url;
+                        subjectLink.classList.add('sections-subject-item', `section-theme-${section.theme}`, 'cloud-shape');
+                        subjectLink.style.clipPath = `url(#${cloudShapes[idx % cloudShapes.length]})`;
+                        subjectLink.style.webkitClipPath = `url(#${cloudShapes[idx % cloudShapes.length]})`;
+                        subjectLink.innerHTML = `<span>${subject.name}</span>`;
+                        subjectLink.setAttribute('data-subject-id', subject.id);
+                        gridDiv.appendChild(subjectLink);
+                    });
+                } else {
+                    const noSubjectsMsg = document.createElement('p');
+                    noSubjectsMsg.classList.add('text-center', 'text-gray-500', 'py-4');
+                    noSubjectsMsg.textContent = 'No subjects available in this section.';
+                    gridDiv.appendChild(noSubjectsMsg);
+                }
+
+                sectionDiv.appendChild(gridDiv);
+                contentContainer.appendChild(sectionDiv);
+            });
+        }, 500); // Simulate network delay
+    });
+</script> 

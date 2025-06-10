@@ -1,0 +1,44 @@
+[
+  {
+    "type": "group",
+    "name": "Child",
+    "url": "/child",
+    "children": [
+      {
+        "type": "section",
+        "name": "Cognitive Skills",
+        "children": [
+          { "type": "subject", "name": "Logic Games" }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "name": "Parent",
+    "url": "/parent",
+    "children": [
+      {
+        "type": "section",
+        "name": "Parenting Tips",
+        "children": [
+          { "type": "subject", "name": "Healthy Habits" }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "group",
+    "name": "Teacher",
+    "url": "/teacher",
+    "children": [
+      {
+        "type": "section",
+        "name": "Classroom Management",
+        "children": [
+          { "type": "subject", "name": "Lesson Planning" }
+        ]
+      }
+    ]
+  }
+] 

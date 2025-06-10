@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Landing</title>
+  <style>
+    body { font-family: 'Nunito', Arial, sans-serif; background: #f6f8fa; margin: 0; }
+    .category-list { margin: 2rem auto; max-width: 600px; }
+    .category-item { background: #fff; border-radius: 1rem; box-shadow: 0 2px 8px #eee; margin-bottom: 1rem; padding: 1.2rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+    .category-type { font-size: 0.9rem; color: #888; margin-left: 1rem; }
+    .add-category-btn { position: fixed; bottom: 2rem; right: 2rem; background: #2db7f6; color: #fff; border: none; border-radius: 50%; width: 60px; height: 60px; font-size: 2.5rem; box-shadow: 0 4px 16px #bbb; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .modal-bg { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.3); align-items: center; justify-content: center; z-index: 1000; }
+    .modal { background: #fff; border-radius: 1rem; padding: 2rem; min-width: 320px; box-shadow: 0 4px 24px #bbb; }
+    .modal label { display: block; margin-bottom: 0.5rem; font-weight: 700; }
+    .modal input, .modal select { width: 100%; padding: 0.7rem; margin-bottom: 1rem; border-radius: 0.5rem; border: 1px solid #ddd; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 1rem; }
+    .modal-actions button { padding: 0.7rem 1.5rem; border-radius: 0.5rem; border: none; font-weight: 700; cursor: pointer; }
+    .modal-actions .cancel { background: #eee; color: #333; }
+    .modal-actions .save { background: #2db7f6; color: #fff; }
+  </style>
+</head>
+<body>
+  <h1 style="text-align:center; margin-top:2rem;">Student Categories</h1>
+  <div class="category-list" id="categoryList"></div>
+  <button class="add-category-btn" id="addCategoryBtn" title="Add Category">+</button>
+  <div class="modal-bg" id="modalBg">
+    <div class="modal">
+      <form id="categoryForm">
+        <label for="catName">Category Name</label>
+        <input type="text" id="catName" required>
+        <label for="catType">Category Type</label>
+        <select id="catType" required>
+          <option value="section">Section</option>
+          <option value="subject">Subject</option>
+          <option value="landing">Landing</option>
+        </select>
+        <div class="modal-actions">
+          <button type="button" class="cancel" id="cancelBtn">Cancel</button>
+          <button type="submit" class="save">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    // LocalStorage key for student categories
+    const STORAGE_KEY = 'student_categories';
+    function getCategories() {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    }
+    function setCategories(cats) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cats));
+    }
+    function renderCategories() {
+      const cats = getCategories();
+      const list = document.getElementById('categoryList');
+      list.innerHTML = '';
+      if (cats.length === 0) {
+        list.innerHTML = '<p style="text-align:center;color:#888;">No categories yet.</p>';
+        return;
+      }
+      cats.forEach(cat => {
+        const div = document.createElement('div');
+        div.className = 'category-item';
+        div.innerHTML = `<span><b>${cat.name}</b> <span class='category-type'>[${cat.type}]</span></span>`;
+        list.appendChild(div);
+      });
+    }
+    // Modal logic
+    const modalBg = document.getElementById('modalBg');
+    const addBtn = document.getElementById('addCategoryBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    addBtn.onclick = () => { modalBg.style.display = 'flex'; };
+    cancelBtn.onclick = () => { modalBg.style.display = 'none'; };
+    document.getElementById('categoryForm').onsubmit = function(e) {
+      e.preventDefault();
+      const name = document.getElementById('catName').value.trim();
+      const type = document.getElementById('catType').value;
+      if (!name) return;
+      const cats = getCategories();
+      cats.push({ name, type });
+      setCategories(cats);
+      renderCategories();
+      modalBg.style.display = 'none';
+      this.reset();
+    };
+    // Initial render
+    renderCategories();
+  </script>
+</body>
+</html>

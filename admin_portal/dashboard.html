@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="/admin_portal/css/style.css">
+</head>
+<body>
+  <div class="admin-sidebar">
+    <div class="admin-logo">Admin Portal</div>
+    <button id="admin-sidebar-toggle" class="admin-toggle" title="Toggle Sidebar">☰</button>
+    <nav class="admin-menu">
+      <a href="#" data-tab="tab-categories" class="active">Categories</a>
+      <a href="#" data-tab="tab-users">Users</a>
+      <a href="#" data-tab="tab-assets">Assets</a>
+    </nav>
+  </div>
+  <div class="admin-dashboard-main">
+    <div id="tab-categories" class="admin-tab">
+      <h2>Manage Categories</h2>
+      <form id="category-form" class="admin-category-form">
+        <input type="text" id="category-name" placeholder="Category Name" required style="margin-right:0.5rem;">
+        <input type="text" id="category-icon" placeholder="Icon (e.g. calculate)" required style="margin-right:0.5rem;">
+        <button type="submit">Add Category</button>
+      </form>
+      <ul id="category-list" class="admin-category-list"></ul>
+    </div>
+    <div id="tab-users" class="admin-tab" style="display:none">Users module coming soon...</div>
+    <div id="tab-assets" class="admin-tab" style="display:none">Assets module coming soon...</div>
+  </div>
+  <script src="/admin_portal/js/main.js"></script>
+</body>
+</html> 
